@@ -5,7 +5,7 @@ package com.company.Vector2d;
  * Encompasses all const-like operations (observers, copying, equality, string conversion) of Vector2d object.
  */
 public class ConstVector2d {
-    private static final double epsilon = 0.005;
+    private static final double EPSILON = 0.005;
 
     protected double x_;
     protected double y_;
@@ -66,7 +66,7 @@ public class ConstVector2d {
      * @return true if clos-ish, false otherwise
      */
     private static boolean DoubleEqualWithEpsilon(double lhs, double rhs) {
-        return lhs - epsilon <= rhs && rhs <= lhs + epsilon;
+        return lhs - EPSILON <= rhs && rhs <= lhs + EPSILON;
     }
 
     /**

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>5</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>765</x>
+      <y>600</y>
+      <w>130</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>/AbstractField/
+--
+- board: Board
+--
+/+ isWalkable(): boolean/
+/+ draw(Graphics2d, int, int)/
+/+ onPlayerEnter(Player)/
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>550</x>
+      <y>735</y>
+      <w>130</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>WalkableField
+--
+_- COLOR: Color_
+_- RECT: Rectangle2D.Double_
+- consumble_: boolean
+--
++ isWalkable(): boolean
++ draw(Graphics2d, int, int): void
++ onPlayerEnter(Player): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>605</x>
+      <y>650</y>
+      <w>185</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>350.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>735</y>
+      <w>130</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>WallField
+--
+_- COLOR: Color_
+_- RECT: Rectangle2D.Double_
+--
++ isWalkable(): boolean
++ draw(Graphics2d, int, int): void
++ onPlayerEnter(Player): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>755</x>
+      <y>650</y>
+      <w>60</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>855</x>
+      <y>735</y>
+      <w>130</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>EnemyField
+--
+_- COLOR: Color_
+_- RECT: Rectangle2D.Double_
+--
++ isWalkable(): boolean
++ draw(Graphics2d, int, int): void
++ onPlayerEnter(Player): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1000</x>
+      <y>735</y>
+      <w>130</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TeleportingField
+--
+- ownPos_: ConstVector2d
+- target_: ConstVector2d
+--
++ isWalkable(): boolean
++ draw(Graphics2d, int, int): void
++ onPlayerEnter(Player): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>835</x>
+      <y>650</y>
+      <w>90</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;160.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>875</x>
+      <y>650</y>
+      <w>195</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;370.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>275</x>
+      <y>550</y>
+      <w>170</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>ConstVector2d
+--
+_- EPSILON: double_
+# x_: double
+# y_: double
+--
++ getX(): int
++ getY(): int
++ copy(): Vector2d
++ toString(): String
++ equals(ConstVector2d): boolean
+_- DoubleEqualWithEpsilon(double, double): boolean_
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>275</x>
+      <y>685</y>
+      <w>170</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>Vector2d
+--
+
+--
++ setX(double): void
++ setY(double): void
++ set(double, double): void
++ add(ConstVector2d): Vector2d
++ add(double, double): Vector2d
++ time(double): Vector2d
++ rot90(boolean): Vector2d</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>640</y>
+      <w>15</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>305</x>
+      <y>305</y>
+      <w>190</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Player
+--
+_- PLAYER_SPEED: double_
+_- COLOR: Color_
+_- RECT: Rectangle2D.Double_
+_- KEY_TO_DIRECTION: Map&lt;Integer, Direction&gt;_
+- localCenter_: Vector2d
+- board_: Board
+- onPlayerMoveListeners_: List&lt;Runnable&gt;
+- direction_: Direction
+- nextDirection_: Direction
+--
++ addPlayerMoveListeners(Runnable): void
++ getLocalCenter(): ConstVector2d
++ setLocalCenter(ConstVector2d): void
++ update(double): void
++ draw(Graphics2D): void
+- couldMoveToDirection(Direction, double): boolean
+- notifyListeners(): void
+- moveToDirection(Direction, double): void
+- getAmountToShove(Direction, ConstVector2d): double
+- shoveToWall(Direction): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>715</x>
+      <y>295</y>
+      <w>240</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Board
+--
+_- BLOCK_SIZE: int_
+_- FONT: font_
+- fieldMatrix_: Matrix&lt;AbstractField&gt;
+- player_: Player
+- keyboardManager_: KeyboardManager
+- gameWon_: Boolean
+- score_: int
+--
++ paintComponent(Graphics): void
++ getField(ConstVector2d): AbstractField
++ playerConsumned(AbstractField): void
++ onPacmanMoved(): void
++ update(double): void
++ getKeyboardManager(): KeyboardManager
++ hasGameEnded(): boolean
+- isInBoundaries(ConstVector2d): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>200</y>
+      <w>50</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>JPanel</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>210</y>
+      <w>15</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>820</x>
+      <y>430</y>
+      <w>25</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=1..n</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;340.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>490</x>
+      <y>385</y>
+      <w>235</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>450.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1015</x>
+      <y>315</y>
+      <w>130</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>KeyboardManager
+--
+- keyToPressed_: Map&lt;Integer, Boolean&gt;
+--
++ keyTyped(KeyEvent): void
++ keyPressed(KeyEvent): void
++ keyReleased(KeyEvent): void
++ isDown(int): boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1085</x>
+      <y>220</y>
+      <w>50</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>/KeyListener/
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1105</x>
+      <y>230</y>
+      <w>15</w>
+      <h>95</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>950</x>
+      <y>335</y>
+      <w>75</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>545</y>
+      <w>170</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Matrix&lt;T&gt;
+--
+- data_: T[]
+- width_: int
+- height_: int
+--
++ get(int, int): T
++ set(int, int, T): void
++ getWidth(): int
++ getHeight(): int
++ iterator(): Iterator&lt;T&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>585</x>
+      <y>490</y>
+      <w>50</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>/Iterable&lt;T&gt;/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>605</x>
+      <y>500</y>
+      <w>15</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+</diagram>

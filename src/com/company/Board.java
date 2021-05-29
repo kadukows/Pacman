@@ -3,12 +3,14 @@ package com.company;
 import com.company.Vector2d.ConstVector2d;
 import com.company.entities.Player;
 import com.company.field.AbstractField;
+import com.company.field.WalkableField;
 import com.company.fieldmatrixfactory.IFieldMatrixFactory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
+import java.util.stream.StreamSupport;
 
 /**
  * Main class of a game, encompasses update-draw-sleep loop of a game and
@@ -16,10 +18,14 @@ import java.awt.geom.AffineTransform;
  */
 public class Board extends JPanel {
     private static final int BLOCK_SIZE = 35;
+    private static final Font FONT = new Font("Purisa", Font.PLAIN, 13);
 
     private final Matrix<AbstractField> fieldMatrix_;
     private final Player player_;
     private final KeyboardManager keyboardManager_;
+
+    private Boolean gameWon_ = null;
+    private int score_ = 0;
 
     /**
      * Default constructor for a class.
@@ -68,6 +74,18 @@ public class Board extends JPanel {
         player_.draw(g2d);
 
         g2d.setTransform(oldTransform);
+
+        /////////////////////////////////////////
+
+        g2d.setFont(FONT);
+        g2d.setColor(Color.WHITE);
+
+        g2d.drawString("Score: " + score_, 20, 70);
+
+        if (hasGameEnded()) {
+            String s = "You have " + (gameWon_ ? "won!" : "lost.");
+            g2d.drawString(s, 20, 30);
+        }
     }
 
     /**
@@ -96,12 +114,25 @@ public class Board extends JPanel {
     }
 
     /**
-     * Callback from AbstractFields obejcts, called when pacman "eats" a consumable.
+     * Callback from AbstractFields objects, called when pacman "eats" a consumable.
+     * This also checks, if any consumable left, and if not, ends the game with "Win" state.
      *
-     * @param field from which field this is called
+     * @param f from which field this is called
      */
-    public void playerConsumed(AbstractField field) {
+    public void playerConsumed(AbstractField f) {
+        score_ += 1;
 
+        boolean allConsumableSpent = StreamSupport.stream(fieldMatrix_.spliterator(), false).allMatch(field -> {
+            if (field instanceof WalkableField) {
+                return !((WalkableField) field).hasConsumable();
+            }
+
+            return true;
+        });
+
+        if (allConsumableSpent) {
+            gameWon_ = true;
+        }
     }
 
     /**
@@ -117,9 +148,11 @@ public class Board extends JPanel {
      * @param dt delta time
      */
     public void update(double dt) {
-        player_.update(dt);
+        if (!hasGameEnded()) {
+            player_.update(dt);
 
-        repaint();
+            repaint();
+        }
     }
 
     /**
@@ -129,5 +162,12 @@ public class Board extends JPanel {
      */
     public KeyboardManager getKeyboardManager() {
         return keyboardManager_;
+    }
+
+    /**
+     * @return true if game ended, false otherwise
+     */
+    public boolean hasGameEnded() {
+        return gameWon_ != null;
     }
 }

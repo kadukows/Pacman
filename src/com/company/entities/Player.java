@@ -18,10 +18,10 @@ import java.util.stream.Stream;
 import static java.awt.event.KeyEvent.*;
 
 public class Player {
-    private static final double PLAYER_SPEED = 5.5;
+    private static final double PLAYER_SPEED = 8.5;
     private static final Color COLOR = new Color(255, 255, 0);
     private static final Rectangle2D.Double RECT = new Rectangle2D.Double(0, 0, 0.6, 0.6);
-    private static final Map<Integer, Direction> keyToDirection_ = Stream.of(new Object[][] {
+    private static final Map<Integer, Direction> KEY_TO_DIRECTION = Stream.of(new Object[][] {
             {Integer.valueOf(VK_UP), Direction.up},
             {Integer.valueOf(VK_DOWN), Direction.down},
             {Integer.valueOf(VK_LEFT), Direction.left},
@@ -174,7 +174,7 @@ public class Player {
      * @param dt delta time
      */
     public void update(double dt) {
-        keyToDirection_.forEach((Integer key_code, Direction direction) -> {
+        KEY_TO_DIRECTION.forEach((Integer key_code, Direction direction) -> {
             if (board_.getKeyboardManager().isDown(key_code)) {
                 nextDirection_ = direction;
             }
@@ -215,5 +215,6 @@ public class Player {
      */
     public void setLocalCenter(ConstVector2d new_pos) {
         localCenter_.set(new_pos.getX(), new_pos.getY());
+        notifyListeners();
     }
 }

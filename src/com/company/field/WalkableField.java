@@ -28,6 +28,15 @@ public class WalkableField extends AbstractField {
     }
 
     /**
+     * Observer for consuamble property.
+     *
+     * @return true if field has consumable, false otherwise
+     */
+    public boolean hasConsumable() {
+        return consumable_;
+    }
+
+    /**
      * Allows player to walk to this field.
      *
      * @return true

@@ -52,7 +52,6 @@ public class TeleportingField extends AbstractField {
      */
     @Override
     public void onPlayerEnter(Player player) {
-        System.out.println("Player is on teleport field, ownPos: " + ownPos_ + ", player pos: " + player.getLocalCenter());
         if (player.getLocalCenter().equals(ownPos_)) {
             player.setLocalCenter(target_);
         }
