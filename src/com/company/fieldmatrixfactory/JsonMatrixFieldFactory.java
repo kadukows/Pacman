@@ -6,25 +6,29 @@ import com.company.Vector2d.ConstVector2d;
 import com.company.field.*;
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.StreamSupport;
 
-
+/**
+ * Creates Matrix of AbstractFields from json file.
+ */
 public class JsonMatrixFieldFactory implements IFieldMatrixFactory {
     private String filename_;
 
+    /**
+     *  Default constructor for class.
+     *
+     * @param filename file with json data
+     */
     public JsonMatrixFieldFactory(String filename) {
         filename_ = filename;
     }
 
-    public static class Field {
+    /**
+     * Helper class for working with gson module.
+     */
+    private static class Field {
         public int x;
         public int y;
         public String type;
@@ -33,12 +37,21 @@ public class JsonMatrixFieldFactory implements IFieldMatrixFactory {
         public Double target_y;
     }
 
-    public static class JsonModel {
+    /**
+     * Helper class for working with gson module.
+     */
+    private static class JsonModel {
         public Field[] items;
         public int width;
         public int height;
     }
 
+    /**
+     * Creates a Matrix of Abstract fields from json file.
+     *
+     * @param board Board to which assign fields.
+     * @return Matrix of AbstractField
+     */
     @Override
     public Matrix<AbstractField> create(Board board) {
         Gson gson = new Gson();
