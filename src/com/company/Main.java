@@ -1,16 +1,11 @@
 package com.company;
 
-import com.company.fieldmatrixfactory.JsonMatrixFieldFactory;
 import javax.swing.*;
 
 public class Main {
     private static void createAndShowGui() {
-        JFrame frame = new JFrame("HelloWorldSwing");
+        JFrame frame = new MyFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        Board board = new Board(new JsonMatrixFieldFactory("test1.json"));
-        frame.add(board);
-
         frame.pack();
         frame.setVisible(true);
     }
