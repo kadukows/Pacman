@@ -196,7 +196,7 @@ public class Player {
     /**
      * Function that draws player onto the current frame.
      *
-     * @param g
+     * @param g Graphics object used to draw
      */
     public void draw(Graphics2D g) {
         ConstVector2d upperLeftCorner = localCenter_.copy().add(-0.5, -0.5);
@@ -211,7 +211,7 @@ public class Player {
     /**
      * Sets player coordinates.
      *
-     * @param new_pos
+     * @param new_pos new position of player
      */
     public void setLocalCenter(ConstVector2d new_pos) {
         localCenter_.set(new_pos.getX(), new_pos.getY());

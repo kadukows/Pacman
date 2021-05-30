@@ -6,9 +6,13 @@ import com.google.gson.GsonBuilder;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * Class that manages highscores.
+ */
 public class HighscoreManager {
-    private final HashMap<String, Integer> levelNameToHighscore_;
+    private final Map<String, Integer> levelNameToHighscore_;
     private final String filename_;
 
     private static class Highscore {
@@ -42,6 +46,11 @@ public class HighscoreManager {
         public ArrayList<Highscore> items  = new ArrayList<>();
     }
 
+    /**
+     * Default constructor.
+     *
+     * @param filename file that highscores will be saved to
+     */
     public HighscoreManager(String filename) {
         levelNameToHighscore_ = new HashMap<String, Integer>();
         filename_ = filename;
@@ -58,15 +67,30 @@ public class HighscoreManager {
         }
     }
 
-    int get(String filename_) {
-        return levelNameToHighscore_.getOrDefault(filename_, 0);
+    /**
+     * Getter for highscore for specific level.
+     *
+     * @param levelName filename of a level
+     * @return Highscore for 0 if recorded, 0 otherwise
+     */
+    public int get(String levelName) {
+        return levelNameToHighscore_.getOrDefault(levelName, 0);
     }
 
-    void put(String filename_, int score) {
-        levelNameToHighscore_.put(filename_, score);
+    /**
+     * Setter for highscore for specific level.
+     *
+     * @param levelName filename of a leven
+     * @param score score to set
+     */
+    public void put(String levelName, int score) {
+        levelNameToHighscore_.put(levelName, score);
     }
 
-    void saveToFile() {
+    /**
+     * Saves current state of highscore manager to a file.
+     */
+    public void saveToFile() {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
 

@@ -9,8 +9,6 @@ import com.google.gson.Gson;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Objects;
-import java.util.stream.StreamSupport;
 
 /**
  * Creates Matrix of AbstractFields from json file.
