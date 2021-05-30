@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.Vector2d.ConstVector2d;
+import com.company.entities.Blinky;
 import com.company.entities.Player;
 import com.company.field.AbstractField;
 import com.company.field.WalkableField;
@@ -9,12 +10,7 @@ import com.company.fieldmatrixfactory.IFieldMatrixFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
-import java.security.Key;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.StreamSupport;
 
 /**
@@ -27,6 +23,7 @@ public class Board extends JPanel {
 
     private final Matrix<AbstractField> fieldMatrix_;
     private final Player player_;
+    private final Blinky blinky_;
     private final KeyboardManager keyboardManager_;
     private final HighscoreManager highscoreManager_;
     private final String levelName_;
@@ -57,6 +54,7 @@ public class Board extends JPanel {
 
         timer_ = new Timer(1000 / 60, (ActionEvent avt) -> this.update(1 / 60.0));
         timer_.start();
+        blinky_ = new Blinky(9, 9, this);
     }
 
     /**
@@ -84,6 +82,7 @@ public class Board extends JPanel {
         }
 
         player_.draw(g2d);
+        blinky_.draw(g2d);
 
         g2d.setTransform(oldTransform);
 
@@ -169,7 +168,6 @@ public class Board extends JPanel {
     public void update(double dt) {
         if (!hasGameEnded()) {
             player_.update(dt);
-
             repaint();
         }
     }

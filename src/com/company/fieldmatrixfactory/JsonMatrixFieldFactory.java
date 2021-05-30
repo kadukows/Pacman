@@ -44,6 +44,7 @@ public class JsonMatrixFieldFactory implements IFieldMatrixFactory {
         public Field[] items;
         public int width;
         public int height;
+
     }
 
     /**
@@ -60,6 +61,7 @@ public class JsonMatrixFieldFactory implements IFieldMatrixFactory {
             JsonModel jsonModel = gson.fromJson(reader, JsonModel.class);
 
             Matrix<AbstractField> result = new Matrix<AbstractField>(jsonModel.width, jsonModel.height);
+
             for (Field field : jsonModel.items) {
                 AbstractField matrix_field = null;
 
