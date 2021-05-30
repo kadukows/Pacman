@@ -12,12 +12,14 @@ public class MyFrame extends JFrame {
     private final JButton resetButton_;
     private final GridBagConstraints gbc_;
     private final KeyboardManager keyboardManager_;
+    private final HighscoreManager highscoreManager_;
 
     private Board board_;
 
 
     MyFrame() {
         keyboardManager_ = new KeyboardManager();
+        highscoreManager_ = new HighscoreManager("highscore.json");
 
         setLayout(new GridBagLayout());
 
@@ -43,7 +45,7 @@ public class MyFrame extends JFrame {
         gbc_.fill = GridBagConstraints.HORIZONTAL;
         getContentPane().add(resetButton_, gbc_);
 
-        board_ = new Board(new JsonMatrixFieldFactory("test1.json"), keyboardManager_);
+        board_ = new Board(new JsonMatrixFieldFactory("test1.json"), keyboardManager_, highscoreManager_, "test1.json");
         gbc_.gridx = 0;
         gbc_.gridy = 0;
         gbc_.gridwidth = 2;
@@ -59,7 +61,7 @@ public class MyFrame extends JFrame {
         board_.forceStop();
         remove(board_);
 
-        board_ = new Board(new JsonMatrixFieldFactory(selectedLevel), keyboardManager_);
+        board_ = new Board(new JsonMatrixFieldFactory(selectedLevel), keyboardManager_, highscoreManager_, selectedLevel);
         gbc_.gridx = 0;
         gbc_.gridy = 0;
         gbc_.gridwidth = 2;

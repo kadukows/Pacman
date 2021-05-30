@@ -28,6 +28,8 @@ public class Board extends JPanel {
     private final Matrix<AbstractField> fieldMatrix_;
     private final Player player_;
     private final KeyboardManager keyboardManager_;
+    private final HighscoreManager highscoreManager_;
+    private final String levelName_;
 
     private final Timer timer_;
 
@@ -39,9 +41,11 @@ public class Board extends JPanel {
      *
      * @param fieldMatrixFactory factory for fieldMatrix
      */
-    public Board(IFieldMatrixFactory fieldMatrixFactory, KeyboardManager keyboardManager) {
+    public Board(IFieldMatrixFactory fieldMatrixFactory, KeyboardManager keyboardManager, HighscoreManager highscoreManager, String levelName) {
         fieldMatrix_ = fieldMatrixFactory.create(this);
         keyboardManager_ = keyboardManager;
+        highscoreManager_ = highscoreManager;
+        levelName_ = levelName;
         player_ = new Player(2, 2, this);
         player_.addPlayerMoveListener(this::onPacmanMoved);
 
@@ -49,9 +53,7 @@ public class Board extends JPanel {
                 BLOCK_SIZE * (fieldMatrix_.getWidth() - 2),
                 BLOCK_SIZE * (fieldMatrix_.getHeight() - 2)));
 
-        //addKeyListener(keyboardManager_);
         setFocusable(true);
-
 
         timer_ = new Timer(1000 / 60, (ActionEvent avt) -> this.update(1 / 60.0));
         timer_.start();
@@ -91,6 +93,7 @@ public class Board extends JPanel {
         g2d.setColor(Color.WHITE);
 
         g2d.drawString("Score: " + score_, 20, 70);
+        g2d.drawString("Highscore: " + highscoreManager_.get(levelName_), 20, 90);
 
         if (hasGameEnded()) {
             String s = "You have " + (gameWon_ ? "won!" : "lost.");
@@ -141,6 +144,11 @@ public class Board extends JPanel {
         });
 
         if (allConsumableSpent) {
+            if (highscoreManager_.get(levelName_) < score_) {
+                highscoreManager_.put(levelName_, score_);
+                highscoreManager_.saveToFile();
+            }
+
             gameWon_ = true;
             timer_.stop();
         }

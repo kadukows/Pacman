@@ -82,11 +82,6 @@ public class JsonMatrixFieldFactory implements IFieldMatrixFactory {
                 result.set(field.y, field.x, matrix_field);
             }
 
-            /*
-            if (!StreamSupport.stream(result.spliterator(), false).allMatch(Objects::nonNull)) {
-                throw new RuntimeException("Wrong json construction");
-            }
-            */
 
             for (int y = 0; y < result.getHeight(); ++y) {
                 for (int x = 0; x < result.getWidth(); ++x) {
