@@ -1,10 +1,11 @@
 package com.company.field;
 
-import java.awt.Graphics2D;
-
 import com.company.Board;
 import com.company.entities.Player;
 import com.sun.istack.internal.NotNull;
+
+import java.awt.*;
+
 
 public abstract class AbstractField {
     protected Board board_;

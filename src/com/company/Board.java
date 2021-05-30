@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
 
 public class Board extends JPanel {
-    private static final int BLOCK_SIZE = 50;
+    private static final int BLOCK_SIZE = 35;
 
     private final Matrix<AbstractField> fieldMatrix_;
     private final Player player_;
