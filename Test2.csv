@@ -1,0 +1,17 @@
+None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
+None,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,None
+None,Wall,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Wall,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Wall,None
+None,Wall,Consumable,Wall,Wall,Consumable,Wall,Wall,Wall,Wall,Wall,Wall,Consumable,Wall,Wall,Consumable,Wall,Consumable,Wall,Consumable,Wall,Wall,Wall,Wall,Consumable,Wall,None
+None,Wall,Consumable,Consumable,Consumable,Consumable,Wall,Consumable,Consumable,Consumable,Consumable,Consumable,None,None,None,None,None,None,None,None,Consumable,Consumable,Consumable,Consumable,Consumable,Wall,None
+None,Wall,Wall,Wall,Wall,Consumable,Wall,Consumable,Wall,Wall,Wall,Wall,None,Wall,Wall,Wall,Wall,Wall,Wall,None,Wall,Wall,Wall,Wall,Consumable,Wall,None
+None,None,None,None,Wall,Consumable,Wall,Consumable,Wall,Consumable,Consumable,Wall,None,Wall,Enemy,Enemy,Enemy,Enemy,Wall,None,Wall,None,None,Wall,Consumable,Wall,None
+Wall,Wall,Wall,Wall,Wall,Consumable,Wall,Consumable,Wall,Wall,Consumable,Wall,None,Wall,Enemy,Enemy,Enemy,Enemy,Wall,None,Wall,None,None,Wall,Consumable,Wall,None
+Teleporting,Consumable,Consumable,Consumable,Consumable,Consumable,Wall,Consumable,Consumable,Consumable,Consumable,Wall,None,Wall,Enemy,Enemy,Enemy,Enemy,Wall,None,Wall,Wall,Wall,Wall,Consumable,Consumable,Teleporting
+Wall,Wall,Wall,Wall,Wall,Consumable,Wall,Wall,Wall,Wall,Wall,Wall,None,Wall,Enemy,Enemy,Enemy,Enemy,Wall,None,Consumable,Consumable,Consumable,Consumable,Consumable,Wall,None
+None,None,None,None,Wall,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,None,Wall,Wall,Enemy,Wall,Wall,Wall,None,Wall,Wall,Wall,Wall,Wall,Wall,None
+None,Wall,Wall,Wall,Wall,Consumable,Wall,Wall,Wall,Consumable,Wall,Wall,None,None,None,None,None,Wall,Wall,None,Consumable,Consumable,Consumable,Consumable,Consumable,Wall,None
+None,Wall,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Wall,Consumable,Wall,None,None,None,None,Wall,Consumable,Wall,Wall,Consumable,Wall,None
+None,Wall,Consumable,Wall,Wall,Consumable,Wall,Wall,Consumable,Wall,Consumable,Wall,Consumable,Wall,Consumable,Wall,Consumable,Wall,Wall,Wall,Wall,Consumable,Wall,Wall,Consumable,Wall,None
+None,Wall,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Wall,Consumable,Consumable,Consumable,Consumable,Consumable,Wall,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Consumable,Wall,None
+None,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall,None
+None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None

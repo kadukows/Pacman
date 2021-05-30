@@ -1,5 +1,8 @@
 package com.company;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
@@ -21,6 +24,49 @@ public class KeyboardManager implements KeyListener {
     }
 
     /**
+     * Attaches KeyStroke interface to a component
+     *
+     * @param component component to attach to
+     */
+    public void attachKeyStrokeToComponent(JComponent component) {
+        Map<String, Integer> keyStrokeToKeyCode = new HashMap<>();
+        keyStrokeToKeyCode.put("UP", KeyEvent.VK_UP);
+        keyStrokeToKeyCode.put("DOWN", KeyEvent.VK_DOWN);
+        keyStrokeToKeyCode.put("LEFT", KeyEvent.VK_LEFT);
+        keyStrokeToKeyCode.put("RIGHT", KeyEvent.VK_RIGHT);
+
+        keyStrokeToKeyCode.forEach((keyStrokeCode, keyCode) -> {
+            String pressedEventName = keyStrokeCode + " pressed";
+
+            component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                    KeyStroke.getKeyStroke(keyStrokeCode), pressedEventName
+            );
+
+            component.getActionMap().put(pressedEventName, new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    keyPressed(keyCode);
+                }
+            });
+
+            ////////////////////////////////////////
+
+            String releasedEventName = keyStrokeCode + " released";
+
+            component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                    KeyStroke.getKeyStroke("released " + keyStrokeCode), releasedEventName
+            );
+
+            component.getActionMap().put(releasedEventName, new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    keyReleased(keyCode);
+                }
+            });
+        });
+    }
+
+    /**
      * Implementation of KeyListener interface. Does nothing.
      */
     @Override
@@ -35,8 +81,17 @@ public class KeyboardManager implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        if (keyToPressed_.containsKey(e.getKeyCode())) {
-            keyToPressed_.put(e.getKeyCode(), true);
+        keyPressed(e.getKeyCode());
+    }
+
+    /**
+     * Records that specific key is pressed down in a map.
+     *
+     * @param keyCode keycode of key to record
+     */
+    public void keyPressed(int keyCode) {
+        if (keyToPressed_.containsKey(keyCode)) {
+            keyToPressed_.put(keyCode, true);
         }
     }
 
@@ -47,8 +102,17 @@ public class KeyboardManager implements KeyListener {
      */
     @Override
     public void keyReleased(KeyEvent e) {
-        if (keyToPressed_.containsKey(e.getKeyCode())) {
-            keyToPressed_.put(e.getKeyCode(), false);
+        keyReleased(e.getKeyCode());
+    }
+
+    /**
+     * Records that specific key is no longer pressed down.
+     *
+     * @param keyCode keyCode of key to record
+     */
+    public void keyReleased(int keyCode) {
+        if (keyToPressed_.containsKey(keyCode)) {
+            keyToPressed_.put(keyCode, false);
         }
     }
 

@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Objects;
+import java.util.stream.StreamSupport;
 
 /**
  * Creates Matrix of AbstractFields from json file.
@@ -75,9 +77,23 @@ public class JsonMatrixFieldFactory implements IFieldMatrixFactory {
                     matrix_field = new TeleportingField(board, new ConstVector2d(field.x + 0.5, field.y + 0.5), new ConstVector2d(field.target_x, field.target_y));
                 }
 
-                assert matrix_field != null;
+                if (matrix_field == null) throw new AssertionError();
 
                 result.set(field.y, field.x, matrix_field);
+            }
+
+            /*
+            if (!StreamSupport.stream(result.spliterator(), false).allMatch(Objects::nonNull)) {
+                throw new RuntimeException("Wrong json construction");
+            }
+            */
+
+            for (int y = 0; y < result.getHeight(); ++y) {
+                for (int x = 0; x < result.getWidth(); ++x) {
+                    if (result.get(y, x) == null) {
+                        throw new RuntimeException("Wrong json ctor");
+                    }
+                }
             }
 
             return result;

@@ -9,7 +9,12 @@ import com.company.fieldmatrixfactory.IFieldMatrixFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
+import java.security.Key;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.StreamSupport;
 
 /**
@@ -24,6 +29,8 @@ public class Board extends JPanel {
     private final Player player_;
     private final KeyboardManager keyboardManager_;
 
+    private final Timer timer_;
+
     private Boolean gameWon_ = null;
     private int score_ = 0;
 
@@ -32,19 +39,22 @@ public class Board extends JPanel {
      *
      * @param fieldMatrixFactory factory for fieldMatrix
      */
-    public Board(IFieldMatrixFactory fieldMatrixFactory) {
+    public Board(IFieldMatrixFactory fieldMatrixFactory, KeyboardManager keyboardManager) {
         fieldMatrix_ = fieldMatrixFactory.create(this);
-        keyboardManager_ = new KeyboardManager();
+        keyboardManager_ = keyboardManager;
         player_ = new Player(2, 2, this);
         player_.addPlayerMoveListener(this::onPacmanMoved);
 
         setPreferredSize(new Dimension(
                 BLOCK_SIZE * (fieldMatrix_.getWidth() - 2),
                 BLOCK_SIZE * (fieldMatrix_.getHeight() - 2)));
-        addKeyListener(keyboardManager_);
+
+        //addKeyListener(keyboardManager_);
         setFocusable(true);
 
-        new Timer(1000 / 60, (ActionEvent avt) -> this.update(1 / 60.0)).start();
+
+        timer_ = new Timer(1000 / 60, (ActionEvent avt) -> this.update(1 / 60.0));
+        timer_.start();
     }
 
     /**
@@ -132,6 +142,7 @@ public class Board extends JPanel {
 
         if (allConsumableSpent) {
             gameWon_ = true;
+            timer_.stop();
         }
     }
 
@@ -169,5 +180,13 @@ public class Board extends JPanel {
      */
     public boolean hasGameEnded() {
         return gameWon_ != null;
+    }
+
+    /**
+     * Force stops timer and game.
+     */
+    void forceStop() {
+        timer_.stop();
+        gameWon_ = false;
     }
 }

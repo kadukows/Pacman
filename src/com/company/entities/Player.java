@@ -88,7 +88,7 @@ public class Player {
         for (boolean inverted : invertedArray) {
             pointsToCheck.add(middlePoint.copy()
                     .add(middlePointDelta.copy()
-                            .rot90(inverted).times(0.9)));
+                            .rot90(inverted).times(0.8)));
         }
 
         for (ConstVector2d point : pointsToCheck) {
