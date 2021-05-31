@@ -168,8 +168,10 @@ public class Board extends JPanel {
     public void update(double dt) {
         if (!hasGameEnded()) {
             player_.update(dt);
+            blinky_.update(dt, player_);
             repaint();
         }
+
     }
 
     /**
