@@ -16,7 +16,7 @@ public class Blinky {
     private static final double BLINKY_SPEED = 4.5;
     private static final Color COLOR= new Color(255, 0, 0);
     private static final Ellipse2D.Double ELIP = new Ellipse2D.Double(0, 0, 0.6, 0.6);
-
+    ArrayList<ConstVector2d> roadPlayer = new ArrayList<ConstVector2d>();
 
     private final Vector2d localCenter_;
     private final Board board_;
@@ -60,6 +60,7 @@ public class Blinky {
         return Math.round(value * 100.0) / 100.0;
     }
 
+
     public void update(double dt, Player player) {
 
         Direction direction;
@@ -67,85 +68,107 @@ public class Blinky {
         ConstVector2d player_position;
         ConstVector2d Blinky_position;
 
-
         player_position = player.getLocalCenter();
         Blinky_position = getLocalCenter();
 
+        roadPlayer.add(player_position);
+
+        System.out.println(roadPlayer.size());
+
+        double X, Y;
+
+        X = roundTo2DecimalPlace(player_position.getX() - Blinky_position.getX());
+        Y = roundTo2DecimalPlace(player_position.getY() - Blinky_position.getY());
+
+        System.out.println(X);
+        System.out.println(Y);
 
 
 
-      if (couldMoveToDirection(Direction.up, dt)){
-          System.out.println(" GÓRA ");
+//        }
 
-          double Blinky_X = roundTo2DecimalPlace(Blinky_position.getX());
-          double Blinky_Y = roundTo2DecimalPlace(Blinky_position.getY());
 
-          if( player_position.getY() < Blinky_Y){
-              System.out.println("pierwszy if");
-              localCenter_.add(Direction.toVector2d(Direction.up).copy().times(dt * BLINKY_SPEED));
-          }
-          else if((player_position.getX() > Blinky_Y) && (couldMoveToDirection(Direction.right, dt))  ){
-              System.out.println("drugi if");
+//                try {
+//            TimeUnit.MILLISECONDS.sleep(100);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+
+//
+//      if (couldMoveToDirection(Direction.up, dt)){
+//          System.out.println(" GÓRA ");
+//
+//          if( player_position.getY() < Blinky_position.getY()){
+//              System.out.println("pierwszy if");
+//              System.out.println(player_position.getY());
+//              System.out.println(Blinky_position.getY());
+//              localCenter_.add(Direction.toVector2d(Direction.up).copy().times(dt * BLINKY_SPEED));
+//          }
+//          else if(((player_position.getX() - Blinky_position.getX()) > 0.1) && (couldMoveToDirection(Direction.right, dt))  ){
+//              System.out.println("drugi if");
+//              System.out.println(player_position.getX());
+//              System.out.println(Blinky_position.getX());
+//              System.out.println(player_position.getX() - Blinky_position.getX() );
+//              System.out.println((player_position.getX() - Blinky_position.getX()) > 0.1 );
+//              localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * BLINKY_SPEED));
+//
+//          }
+//          else if((player_position.getX() < Blinky_position.getX()) && (couldMoveToDirection(Direction.left, dt))){
+//              System.out.println("trzeci if");
+//              System.out.println(player_position.getX());
+//              System.out.println(Blinky_position.getX());
+//              System.out.println(player_position.getX() - Blinky_position.getX() );
+//              System.out.println((player_position.getX() - Blinky_position.getX()) < 0.1 );
+//              localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * BLINKY_SPEED));
+//          }
+//          else if( ((player_position.getY() - Blinky_position.getY()) > 0.1) && couldMoveToDirection(Direction.down, dt)){
+//              System.out.println("czwarty if");
+//              System.out.println(player_position.getY());
+//              System.out.println(Blinky_position.getY());
+//              localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * BLINKY_SPEED));
+//          }
+//          else {
+//              System.out.println("else");
 //              System.out.println(player_position);
-//              System.out.println(Blinky_Y);
-              localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * BLINKY_SPEED));
-
-          }
-          else if((player_position.getX() < Blinky_X) && (couldMoveToDirection(Direction.left, dt))){
-              System.out.println("trzeci if");
-//              System.out.println(player_position);
-//              System.out.println(Blinky_X);
-              localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * BLINKY_SPEED));
-          }
-          else if( (player_position.getY() > Blinky_Y) && couldMoveToDirection(Direction.down, dt)){
-              System.out.println("czwarty if");
-              System.out.println(player_position);
-           System.out.println(Blinky_X);
-              localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * BLINKY_SPEED));
-          }
-          else {
-              System.out.println("else");
-              System.out.println(player_position);
-              System.out.println(Blinky_X);
-              System.out.println(Blinky_Y);
-              localCenter_.add(Direction.toVector2d(Direction.up).copy().times(dt * BLINKY_SPEED));
-          }
-      }
-      else if (couldMoveToDirection(Direction.down, dt)){
-
-          double Blinky_X = roundTo2DecimalPlace(Blinky_position.getX());
-          double Blinky_Y = roundTo2DecimalPlace(Blinky_position.getY());
-
-          if( player_position.getY() > Blinky_Y){
-              localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * BLINKY_SPEED));
-          }
-          else if((player_position.getX() > Blinky_X) && (couldMoveToDirection(Direction.right, dt))  ){
-              localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * BLINKY_SPEED));
-          }
-          else if((player_position.getX() < Blinky_X) && (couldMoveToDirection(Direction.left, dt))){
-              localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * BLINKY_SPEED));
-          }
-          else {
-              localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * BLINKY_SPEED));
-          }
-      }
-      else if (couldMoveToDirection(Direction.left, dt)) {
-
-          double Blinky_X = roundTo2DecimalPlace(Blinky_position.getX());
-
-
-          if (player_position.getX() < Blinky_X) {
-              localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * BLINKY_SPEED));
-          } else if ((player_position.getX() > Blinky_X) && (couldMoveToDirection(Direction.right, dt))) {
-              localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * BLINKY_SPEED));
-          } else {
-              localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * BLINKY_SPEED));
-          }
-      }
-        else if (couldMoveToDirection(Direction.right, dt)) {
-
-              localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * BLINKY_SPEED));
-        }
+//              localCenter_.add(Direction.toVector2d(Direction.up).copy().times( dt * BLINKY_SPEED));
+//          }
+//      }
+//      else if (couldMoveToDirection(Direction.down, dt)){
+//
+//          double Blinky_X = roundTo2DecimalPlace(Blinky_position.getX());
+//          double Blinky_Y = roundTo2DecimalPlace(Blinky_position.getY());
+//
+//          if( ((player_position.getY() > Blinky_position.getY()))){
+//              localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * BLINKY_SPEED));
+//          }
+//          else if(((player_position.getX() > Blinky_position.getX())) && (couldMoveToDirection(Direction.right, dt))  ){
+//              localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * BLINKY_SPEED));
+//          }
+//          else if((player_position.getX() < Blinky_X) && (couldMoveToDirection(Direction.left, dt))){
+//              localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * BLINKY_SPEED));
+//          }
+//          else {
+//              localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * BLINKY_SPEED));
+//          }
+//      }
+//      else if (couldMoveToDirection(Direction.left, dt)) {
+//
+//          double Blinky_X = roundTo2DecimalPlace(Blinky_position.getX());
+//
+//
+//          if (player_position.getX() < Blinky_X) {
+//              localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * BLINKY_SPEED));
+//          } else if (((player_position.getX() - Blinky_position.getX()) > 0.1 )&& (couldMoveToDirection(Direction.right, dt))) {
+//              localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * BLINKY_SPEED));
+//          } else {
+//              localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * BLINKY_SPEED));
+//          }
+//      }
+//        else if (couldMoveToDirection(Direction.right, dt)) {
+//
+//              localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * BLINKY_SPEED));
+//        }
 
 //        try {
 //            TimeUnit.MILLISECONDS.sleep(200);
@@ -181,8 +204,8 @@ public class Blinky {
 //            }
 //
 //        }
-    }
 
+        }
     public void draw(Graphics2D g) {
         ConstVector2d upperLeftCorner = localCenter_.copy().add(-0.5, -0.5);
         g.setColor(COLOR);
