@@ -14,8 +14,8 @@ public class Clyde extends Ghost implements Runnable{
      * @param blue  is color RGB for ghost
      * @param board board this ghost belongs to
      */
-    public Clyde(int x, int y, int red, int green, int blue, Board board) {
-        super(x, y, red, green, blue, board);
+    public Clyde(int x, int y, int red, int green, int blue, Board board, Direction direction) {
+        super(x, y, red, green, blue, board, direction);
     }
 
     public void update(double dt, Player player) {

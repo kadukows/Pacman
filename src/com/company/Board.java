@@ -54,24 +54,24 @@ public class Board extends JPanel {
         String s2 = "test2.json";
 
         if(jsonName.equals(s1)) {
-            blinky_ = new Blinky(9, 9, 255, 0, 0, this);
+            blinky_ = new Blinky(9, 9, 255, 0, 0, this, Direction.left);
         }
         else if(jsonName.equals(s2)){
-            blinky_ = new Blinky(15,11,255,0,0,this);
+            blinky_ = new Blinky(15,11,255,0,0,this,  Direction.left);
         }
 
         if(jsonName.equals(s1)) {
-            pinky_ = new Pinky(10, 11, 243, 0, 255, this);
+            pinky_ = new Pinky(10, 11, 243, 0, 255, this, Direction.left);
         }
         else if(jsonName.equals(s2)){
-            pinky_ = new Pinky(17,8,243,0,255,this);
+            pinky_ = new Pinky(17,8,243,0,255,this,  Direction.left);
         }
 
         if(jsonName.equals(s1)) {
-            clyde_ = new Clyde(8, 11, 255, 104, 0, this);
+            clyde_ = new Clyde(8, 11, 255, 104, 0, this,  Direction.right);
         }
         else if(jsonName.equals(s2)){
-            clyde_ = new Clyde(14,8,255,104,0,this);
+            clyde_ = new Clyde(14,8,255,104,0,this,  Direction.right);
         }
 
 
@@ -217,7 +217,7 @@ public class Board extends JPanel {
         if (!hasGameEnded()) {
             player_.update(dt);
             blinky_.update(dt, player_);
-            pinky_.update(dt,player_);
+            pinky_.algorithmPinky(dt,player_);
             clyde_.update(dt, player_);
             repaint();
         }

@@ -17,6 +17,7 @@ public class Ghost {
     private static final Rectangle2D.Double RECT = new Rectangle2D.Double(0, 0, 0.6, 0.6);
     public final Vector2d localCenter_;
     protected final Board board_;
+    protected Direction currentDirection_;
 
     /**
      * Default constructor for Ghost class.
@@ -29,13 +30,25 @@ public class Ghost {
      * @param board board this ghost belongs to
      */
 
-    public Ghost(int x, int y, int red, int green, int blue, @NotNull Board board) {
+    public Ghost(int x, int y, int red, int green, int blue, @NotNull Board board, Direction direction) {
         localCenter_ = new Vector2d(x + 0.5, y + 0.5);
         board_ = board;
         COLOR = new Color(red, green, blue);
-        Direction direction_ = Direction.up;
-        Direction nextDirection_ = null;
+        currentDirection_ = direction;
     }
+
+    /**
+     * Returns current direction of ghost.
+     *
+     * @return current Direction
+     */
+    public Direction getCurrentDirection() { return currentDirection_ ; }
+
+
+    /**
+     * Set current direction of ghost.
+     */
+    public void setCurrentDirection(Direction direction) { currentDirection_ = direction; }
 
     /**
      * Returns current local center of ghost.

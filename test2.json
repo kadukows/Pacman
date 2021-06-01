@@ -448,7 +448,7 @@
     {
       "x": 8,
       "y": 3,
-      "type": "Wall"
+      "type": "Consumable"
     },
     {
       "x": 9,
@@ -458,7 +458,7 @@
     {
       "x": 10,
       "y": 3,
-      "type": "Wall"
+      "type": "Consumable"
     },
     {
       "x": 11,
@@ -723,7 +723,7 @@
     {
       "x": 9,
       "y": 5,
-      "type": "Wall"
+      "type": "Consumable"
     },
     {
       "x": 10,
@@ -978,7 +978,7 @@
     {
       "x": 6,
       "y": 7,
-      "type": "Wall"
+      "type": "Consumable"
     },
     {
       "x": 7,
