@@ -4,7 +4,7 @@ import com.company.Board;
 import com.company.Direction;
 import com.company.Vector2d.ConstVector2d;
 
-public class Blinky extends Ghost {
+public class Blinky extends Ghost implements Runnable{
 
     /**
      * Default constructor for Ghost class.
@@ -22,6 +22,8 @@ public class Blinky extends Ghost {
 
     public void update(double dt, Player player) {
 
+
+
         Direction direction;
 
         ConstVector2d player_position;
@@ -30,37 +32,17 @@ public class Blinky extends Ghost {
         player_position = player.getLocalCenter();
         Blinky_position = getLocalCenter();
 
-
-        if (player_position.getY() < Blinky_position.getY()) {
-            System.out.println(" W góre ");
-            direction = Direction.up;
+            direction = Direction.left;
             if (couldMoveToDirection(direction, dt)) {
                 localCenter_.add(Direction.toVector2d(direction).copy().times(dt * GHOST_SPEED));
 
-            } else {
-                System.out.println(" W dół ");
-                direction = Direction.down;
-                if (couldMoveToDirection(direction, dt)) {
-                    localCenter_.add(Direction.toVector2d(direction).copy().times(dt * GHOST_SPEED));
-                }
             }
 
-            if (player_position.getX() > Blinky_position.getX()) {
-                direction = Direction.right;
-                System.out.println(" W prawo ");
-                if (couldMoveToDirection(direction, dt)) {
-                    localCenter_.add(Direction.toVector2d(direction).copy().times(dt * GHOST_SPEED));
-                }
-            } else {
-                direction = Direction.left;
-                System.out.println(" lewo ");
-                if (couldMoveToDirection(direction, dt)) {
-                    localCenter_.add(Direction.toVector2d(direction).copy().times(dt * GHOST_SPEED));
-                }
-            }
 
-        }
+    }
 
+    @Override
+    public void run() {
 
     }
 }

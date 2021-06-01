@@ -2,6 +2,8 @@ package com.company;
 
 import com.company.Vector2d.ConstVector2d;
 import com.company.entities.Blinky;
+import com.company.entities.Clyde;
+import com.company.entities.Pinky;
 import com.company.entities.Player;
 import com.company.field.AbstractField;
 import com.company.field.WalkableField;
@@ -23,7 +25,9 @@ public class Board extends JPanel {
 
     private final Matrix<AbstractField> fieldMatrix_;
     private final Player player_;
-    private final Blinky blinky_;
+    private Blinky blinky_;
+    private Pinky pinky_;
+    private Clyde clyde_;
     private final KeyboardManager keyboardManager_;
     private final HighscoreManager highscoreManager_;
     private final String levelName_;
@@ -44,7 +48,33 @@ public class Board extends JPanel {
         highscoreManager_ = highscoreManager;
         levelName_ = levelName;
         player_ = new Player(2, 2, this);
-        blinky_ = new Blinky(9,9,255,0,0,this);
+
+        String jsonName = fieldMatrixFactory.getFilename();
+        String s1 = "test1.json";
+        String s2 = "test2.json";
+
+        if(jsonName.equals(s1)) {
+            blinky_ = new Blinky(9, 9, 255, 0, 0, this);
+        }
+        else if(jsonName.equals(s2)){
+            blinky_ = new Blinky(15,11,255,0,0,this);
+        }
+
+        if(jsonName.equals(s1)) {
+            pinky_ = new Pinky(10, 11, 243, 0, 255, this);
+        }
+        else if(jsonName.equals(s2)){
+            pinky_ = new Pinky(17,8,243,0,255,this);
+        }
+
+        if(jsonName.equals(s1)) {
+            clyde_ = new Clyde(8, 11, 255, 104, 0, this);
+        }
+        else if(jsonName.equals(s2)){
+            clyde_ = new Clyde(14,8,255,104,0,this);
+        }
+
+
         player_.addPlayerMoveListener(this::onPacmanMoved);
 
         setPreferredSize(new Dimension(
@@ -82,7 +112,24 @@ public class Board extends JPanel {
         }
 
         player_.draw(g2d);
-        blinky_.draw(g2d);
+
+        try {
+            blinky_.draw(g2d);
+        }catch (Exception e){
+            System.out.println("Blinky not created");
+        }
+
+        try {
+            pinky_.draw(g2d);
+        }catch (Exception e){
+            System.out.println("Pinky not created");
+        }
+
+        try {
+            clyde_.draw(g2d);
+        }catch (Exception e){
+            System.out.println("Clyde not created");
+        }
 
         g2d.setTransform(oldTransform);
 

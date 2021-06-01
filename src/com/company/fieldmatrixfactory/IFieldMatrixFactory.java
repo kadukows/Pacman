@@ -8,6 +8,14 @@ import com.company.field.AbstractField;
  * Interface for factories of AbstractField Matrices
  */
 public interface IFieldMatrixFactory {
+
+    /**
+     * Returns current filename of JSON.
+     *
+     * @return filename
+     */
+    String getFilename();
+
     /**
      * Creates Matrix of AbstractFields.
      *

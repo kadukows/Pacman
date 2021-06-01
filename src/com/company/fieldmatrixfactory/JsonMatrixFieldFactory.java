@@ -25,6 +25,15 @@ public class JsonMatrixFieldFactory implements IFieldMatrixFactory {
         filename_ = filename;
     }
 
+
+    /**
+     * Returns current filename of JSON.
+     *
+     * @return filename
+     */
+    @Override
+    public String getFilename() { return filename_; }
+
     /**
      * Helper class for working with gson module.
      */
