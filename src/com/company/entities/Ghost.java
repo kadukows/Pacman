@@ -12,11 +12,11 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Ghost {
-    public static final double GHOST_SPEED = 4.5;
+    protected static final double GHOST_SPEED = 4.5;
     private final Color COLOR;
     private static final Rectangle2D.Double RECT = new Rectangle2D.Double(0, 0, 0.6, 0.6);
     public final Vector2d localCenter_;
-    private final Board board_;
+    protected final Board board_;
 
     /**
      * Default constructor for Ghost class.

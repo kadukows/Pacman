@@ -213,6 +213,7 @@ public class Board extends JPanel {
      * @param dt delta time
      */
     public void update(double dt) {
+
         if (!hasGameEnded()) {
             player_.update(dt);
             blinky_.update(dt, player_);
