@@ -31,6 +31,16 @@ public class EnemyField extends AbstractField {
     }
 
     /**
+     * Allows Ghost from walking onto this field.
+     *
+     * @return true
+     */
+    @Override
+    public boolean isWalkableForGhost() {
+        return true;
+    }
+
+    /**
      * Draws this field.
      *
      * @param g Graphics2D object used to draw

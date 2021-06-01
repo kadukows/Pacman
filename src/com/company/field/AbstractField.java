@@ -29,6 +29,13 @@ public abstract class AbstractField {
     public abstract boolean isWalkable();
 
     /**
+     * Allows Ghost from walking onto this field.
+     *
+     * @return true
+     */
+    public abstract boolean isWalkableForGhost();
+
+    /**
      * Method used to draw field on to current frame.
      *
      * @param g Graphics2D object used to draw

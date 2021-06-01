@@ -47,6 +47,16 @@ public class WalkableField extends AbstractField {
     }
 
     /**
+     * Allows Ghost from walking onto this field.
+     *
+     * @return true
+     */
+    @Override
+    public boolean isWalkableForGhost() {
+        return true;
+    }
+
+    /**
      * Draw this field onto frame.
      *
      * @param g Graphics2D object used to draw

@@ -31,6 +31,16 @@ public class WallField extends AbstractField {
     }
 
     /**
+     * Forbids Ghost from walking onto this field.
+     *
+     * @return false
+     */
+    @Override
+    public boolean isWalkableForGhost() {
+        return false;
+    }
+
+    /**
      * Draws wall onto a frame.
      *
      * @param g Graphics2D object used to draw

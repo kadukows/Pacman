@@ -71,7 +71,7 @@ public class Ghost {
 
         for (ConstVector2d point : pointsToCheck) {
             AbstractField field = board_.getField(point);
-            if (field == null || !field.isWalkable()) {
+            if (field == null || !field.isWalkableForGhost()) {
                 return false;
             }
         }

@@ -1,6 +1,7 @@
 package com.company.entities;
 
 import com.company.Board;
+import com.company.Direction;
 
 public class Clyde extends Ghost implements Runnable{
     /**
@@ -16,6 +17,19 @@ public class Clyde extends Ghost implements Runnable{
     public Clyde(int x, int y, int red, int green, int blue, Board board) {
         super(x, y, red, green, blue, board);
     }
+
+    public void update(double dt, Player player) {
+
+        Direction direction;
+        direction = Direction.right;
+        if (couldMoveToDirection(direction, dt)) {
+            localCenter_.add(Direction.toVector2d(direction).copy().times(dt * GHOST_SPEED));
+
+        }
+
+
+    }
+
 
     @Override
     public void run() {

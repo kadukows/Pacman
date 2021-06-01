@@ -38,6 +38,16 @@ public class TeleportingField extends AbstractField {
     }
 
     /**
+     * Allows Ghost from walking onto this field.
+     *
+     * @return true
+     */
+    @Override
+    public boolean isWalkableForGhost() {
+        return true;
+    }
+
+    /**
      * This field should not be visible to player, so this draws nothing.
      */
     @Override
