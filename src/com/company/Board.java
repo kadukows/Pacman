@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.Vector2d.ConstVector2d;
+import com.company.entities.Blinky;
 import com.company.entities.Player;
 import com.company.field.AbstractField;
 import com.company.field.WalkableField;
@@ -9,12 +10,7 @@ import com.company.fieldmatrixfactory.IFieldMatrixFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
-import java.security.Key;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.StreamSupport;
 
 /**
@@ -27,6 +23,7 @@ public class Board extends JPanel {
 
     private final Matrix<AbstractField> fieldMatrix_;
     private final Player player_;
+    private final Blinky blinky_;
     private final KeyboardManager keyboardManager_;
     private final HighscoreManager highscoreManager_;
     private final String levelName_;
@@ -47,6 +44,7 @@ public class Board extends JPanel {
         highscoreManager_ = highscoreManager;
         levelName_ = levelName;
         player_ = new Player(2, 2, this);
+        blinky_ = new Blinky(9,9,255,0,0,this);
         player_.addPlayerMoveListener(this::onPacmanMoved);
 
         setPreferredSize(new Dimension(
@@ -84,6 +82,7 @@ public class Board extends JPanel {
         }
 
         player_.draw(g2d);
+        blinky_.draw(g2d);
 
         g2d.setTransform(oldTransform);
 
@@ -104,7 +103,7 @@ public class Board extends JPanel {
     /**
      * Helper function for checking if coordinates are in boundaries of matrix.
      *
-     * @param point oordinates to check
+     * @param point ordinates to check
      * @return true if are on matrix, false otherwise
      */
     private boolean isInBoundaries(ConstVector2d point) {
@@ -169,6 +168,7 @@ public class Board extends JPanel {
     public void update(double dt) {
         if (!hasGameEnded()) {
             player_.update(dt);
+            blinky_.update(dt, player_);
 
             repaint();
         }
