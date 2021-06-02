@@ -44,7 +44,7 @@ public class TeleportingField extends AbstractField {
      */
     @Override
     public boolean isWalkableForGhost() {
-        return true;
+        return false;
     }
 
     /**

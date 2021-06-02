@@ -61,17 +61,17 @@ public class Pinky extends Ghost implements Runnable {
             }
         }
         else if ( direction == Direction.down ){
-            if (Double.compare(Pacman_position.getY(), Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
-                setCurrentDirection(Direction.down);
-                localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * GHOST_SPEED));
-            }
-            else if( Double.compare(Pacman_position.getX(), Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt)){
+            if( Double.compare(Pacman_position.getX(), Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt)){
                 setCurrentDirection(Direction.right);
                 localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * GHOST_SPEED));
             }
             else if ( Double.compare(Pacman_position.getX(), Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
                 setCurrentDirection(Direction.left);
                 localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * GHOST_SPEED));
+            }
+            else if (Double.compare(Pacman_position.getY(), Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
+                setCurrentDirection(Direction.down);
+                localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * GHOST_SPEED));
             }
             else if (couldMoveToDirection(Direction.down,dt)){
                 setCurrentDirection(Direction.down);
@@ -138,8 +138,6 @@ public class Pinky extends Ghost implements Runnable {
                 localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * GHOST_SPEED));
             }
         }
-
-
     }
 
     @Override

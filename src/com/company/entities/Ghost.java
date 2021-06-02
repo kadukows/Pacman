@@ -79,7 +79,7 @@ public class Ghost {
         for (boolean inverted : invertedArray) {
             pointsToCheck.add(middlePoint.copy()
                     .add(middlePointDelta.copy()
-                            .rot90(inverted).times(0.8)));
+                            .rot90(inverted).times(0.7)));
         }
 
         for (ConstVector2d point : pointsToCheck) {
@@ -91,6 +91,26 @@ public class Ghost {
 
         return true;
     }
+
+    /**
+     * Moves to specified direction without checking if it is possible.
+     *
+     * @param direction direction to which move
+     * @param dt delta time, indicates how much to move
+     */
+    protected void moveToDirection(Direction direction, double dt) {
+        if (!couldMoveToDirection(direction, dt)) throw new RuntimeException();
+        localCenter_.add(Direction.toVector2d(direction).copy().times(dt * GHOST_SPEED));
+
+        // centering
+        switch (direction) {
+            case up:
+            case down: localCenter_.setX(Math.floor(localCenter_.getX()) + 0.5); break;
+            case left:
+            case right: localCenter_.setY(Math.floor(localCenter_.getY()) + 0.5); break;
+        }
+    }
+
 
     /**
      * Function that draws ghost onto the current frame.

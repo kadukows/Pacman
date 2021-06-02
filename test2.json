@@ -1427,12 +1427,12 @@
     {
       "x": 14,
       "y": 10,
-      "type": "Wall"
+      "type": "Enemy"
     },
     {
       "x": 15,
       "y": 10,
-      "type": "Enemy"
+      "type": "Wall"
     },
     {
       "x": 16,

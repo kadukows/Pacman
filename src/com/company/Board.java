@@ -61,14 +61,14 @@ public class Board extends JPanel {
         }
 
         if(jsonName.equals(s1)) {
-            pinky_ = new Pinky(10, 11, 243, 0, 255, this, Direction.left);
+            pinky_ = new Pinky(8, 11, 243, 0, 255, this, Direction.left);
         }
         else if(jsonName.equals(s2)){
             pinky_ = new Pinky(17,8,243,0,255,this,  Direction.left);
         }
 
         if(jsonName.equals(s1)) {
-            clyde_ = new Clyde(8, 11, 255, 104, 0, this,  Direction.right);
+            clyde_ = new Clyde(9, 12, 255, 104, 0, this,  Direction.up);
         }
         else if(jsonName.equals(s2)){
             clyde_ = new Clyde(14,8,255,104,0,this,  Direction.right);
@@ -218,7 +218,7 @@ public class Board extends JPanel {
             player_.update(dt);
             blinky_.update(dt, player_);
             pinky_.algorithmPinky(dt,player_);
-            clyde_.update(dt, player_);
+            clyde_.algorithmClyde(dt, player_);
             repaint();
         }
     }
