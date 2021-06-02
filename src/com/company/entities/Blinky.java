@@ -20,23 +20,35 @@ public class Blinky extends Ghost implements Runnable{
         super(x, y, red, green, blue, board, direction);
     }
 
-    public void update(double dt, Player player) {
+
+    /**
+     * Manhattan metric calculation
+     * @param Pacman_position pacman position on the bord
+     * @param Clyde_position Clyde position on the bord
+     * @return distance between Pacman and Clyde
+     */
+    private double manhattanMetric(ConstVector2d Pacman_position, ConstVector2d Clyde_position ){
+        double length;
+
+        length = Math.abs(Pacman_position.getX()-Clyde_position.getX()) + Math.abs(Pacman_position.getY()-Clyde_position.getY());
+        return length;
+    }
+
+
+
+    public void algorithmBlinky(double dt, Player player) {
 
 
 
         Direction direction;
 
-        ConstVector2d player_position;
+        ConstVector2d Pacman_position;
         ConstVector2d Blinky_position;
 
-        player_position = player.getLocalCenter();
+        Pacman_position = player.getLocalCenter();
         Blinky_position = getLocalCenter();
 
-            direction = Direction.left;
-            if (couldMoveToDirection(direction, dt)) {
-                localCenter_.add(Direction.toVector2d(direction).copy().times(dt * GHOST_SPEED));
-
-            }
+        double length = manhattanMetric(Pacman_position, Blinky_position);
 
 
     }

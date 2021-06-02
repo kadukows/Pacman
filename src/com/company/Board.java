@@ -216,7 +216,7 @@ public class Board extends JPanel {
 
         if (!hasGameEnded()) {
             player_.update(dt);
-            blinky_.update(dt, player_);
+            blinky_.algorithmBlinky(dt, player_);
             pinky_.algorithmPinky(dt,player_);
             clyde_.algorithmClyde(dt, player_);
             repaint();

@@ -10,6 +10,7 @@ import com.sun.istack.internal.NotNull;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Ghost {
     protected static final double GHOST_SPEED = 4.5;
@@ -109,6 +110,76 @@ public class Ghost {
             case left:
             case right: localCenter_.setY(Math.floor(localCenter_.getY()) + 0.5); break;
         }
+    }
+
+
+    /**
+     * Search in which direction the ghost cannot move
+     * @param direction the direction in which the ghost moves
+     * @return the direction the ghost cannot move
+     */
+
+    protected Direction searchForbiddenDirection(Direction direction){
+        Direction forbiddenDirection;
+
+        if ( direction == Direction.down){
+            forbiddenDirection = Direction.up;
+        }
+        else if ( direction == Direction.up){
+            forbiddenDirection = Direction.down;
+        }
+        else if ( direction == Direction.left){
+            forbiddenDirection = Direction.right;
+        }
+        else {
+            forbiddenDirection = Direction.left;
+        }
+
+        return forbiddenDirection;
+    }
+
+    /**
+     * Movement of the  ghost in the available direction
+     * @param forbiddenDirection the direction the ghost cannot move
+     * @param dt delta time
+     */
+
+    protected void  MoveToAvailableDirection(Direction forbiddenDirection, double dt){
+
+        ArrayList<Direction> availableDirections = new ArrayList<>();
+        availableDirections.add(Direction.up);
+        availableDirections.add(Direction.down);
+        availableDirections.add(Direction.left);
+        availableDirections.add(Direction.right);
+
+        availableDirections.remove(forbiddenDirection);
+        Collections.shuffle(availableDirections);
+
+        for(int i = 0; i < availableDirections.size(); i++){
+            if (couldMoveToDirection(availableDirections.get(i), dt)){
+                setCurrentDirection(availableDirections.get(i));
+                moveToDirection(availableDirections.get(i), dt);
+            }
+        }
+
+
+//        if (Direction.up != forbiddenDirection && couldMoveToDirection(Direction.up, dt)){
+//            setCurrentDirection(Direction.up);
+//            moveToDirection(Direction.up, dt);
+//        }
+//
+//        else if (Direction.down != forbiddenDirection && couldMoveToDirection(Direction.down, dt)){
+//            setCurrentDirection(Direction.down);
+//            moveToDirection(Direction.down, dt);
+//        }
+//        else if (Direction.right != forbiddenDirection && couldMoveToDirection(Direction.right, dt)){
+//            setCurrentDirection(Direction.right);
+//            moveToDirection(Direction.right, dt);
+//        }
+//        else if (Direction.left != forbiddenDirection && couldMoveToDirection(Direction.left, dt)){
+//            setCurrentDirection(Direction.left);
+//            moveToDirection(Direction.left, dt);
+//        }
     }
 
 

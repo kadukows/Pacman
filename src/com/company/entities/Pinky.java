@@ -34,108 +34,110 @@ public class Pinky extends Ghost implements Runnable {
         Pinky_position = getLocalCenter();
         direction = getCurrentDirection();
 
+
+
         if (direction == Direction.up){
             if (Double.compare(Pacman_position.getY(), Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
                 setCurrentDirection(Direction.up);
-                localCenter_.add(Direction.toVector2d(Direction.up).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.up,dt);
             }
             else if( Double.compare(Pacman_position.getX(), Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt)){
                 setCurrentDirection(Direction.right);
-                localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.right,dt);
             }
             else if ( Double.compare(Pacman_position.getX(), Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
                 setCurrentDirection(Direction.left);
-                localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.left,dt);
             }
             else if (couldMoveToDirection(Direction.up,dt)){
                 setCurrentDirection(Direction.up);
-                localCenter_.add(Direction.toVector2d(Direction.up).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.up,dt);
             }
             else if (couldMoveToDirection(Direction.right,dt)){
                 setCurrentDirection(Direction.right);
-                localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.right,dt);
             }
             else {
                 setCurrentDirection(Direction.left);
-                localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.left,dt);
             }
         }
         else if ( direction == Direction.down ){
             if( Double.compare(Pacman_position.getX(), Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt)){
                 setCurrentDirection(Direction.right);
-                localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.right,dt);
             }
             else if ( Double.compare(Pacman_position.getX(), Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
                 setCurrentDirection(Direction.left);
-                localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.left,dt);
             }
             else if (Double.compare(Pacman_position.getY(), Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
                 setCurrentDirection(Direction.down);
-                localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.down,dt);
             }
             else if (couldMoveToDirection(Direction.down,dt)){
                 setCurrentDirection(Direction.down);
-                localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.down,dt);
             }
             else if (couldMoveToDirection(Direction.right,dt)){
                 setCurrentDirection(Direction.right);
-                localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.right,dt);
             }
             else {
                 setCurrentDirection(Direction.left);
-                localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.left,dt);
             }
         }
         else if ( direction == Direction.left ){
             if ( Double.compare(Pacman_position.getX(), Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
                 setCurrentDirection(Direction.left);
-                localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.left,dt);
             }
             else if( Double.compare(Pacman_position.getY(), Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
                 setCurrentDirection(Direction.up);
-                localCenter_.add(Direction.toVector2d(Direction.up).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.up,dt);
             }
             else if( Double.compare(Pacman_position.getY(), Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
                 setCurrentDirection(Direction.down);
-                localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.down,dt);
             }
             else if (couldMoveToDirection(Direction.left,dt)){
                 setCurrentDirection(Direction.left);
-                localCenter_.add(Direction.toVector2d(Direction.left).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.left,dt);
             }
             else if (couldMoveToDirection(Direction.up,dt)){
                 setCurrentDirection(Direction.up);
-                localCenter_.add(Direction.toVector2d(Direction.up).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.up,dt);
             }
             else {
                 setCurrentDirection(Direction.down);
-                localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.down,dt);
             }
         }
         else {
             if ( Double.compare(Pacman_position.getX(), Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt) ){
                 setCurrentDirection(Direction.right);
-                localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.right,dt);
             }
             else if( Double.compare(Pacman_position.getY(), Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
                 setCurrentDirection(Direction.up);
-                localCenter_.add(Direction.toVector2d(Direction.up).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.up,dt);
             }
             else if( Double.compare(Pacman_position.getY(), Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
                 setCurrentDirection(Direction.down);
-                localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.down,dt);
             }
             else if (couldMoveToDirection(Direction.right,dt)){
                 setCurrentDirection(Direction.right);
-                localCenter_.add(Direction.toVector2d(Direction.right).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.right,dt);
             }
             else if (couldMoveToDirection(Direction.up,dt)){
                 setCurrentDirection(Direction.up);
-                localCenter_.add(Direction.toVector2d(Direction.up).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.up,dt);
             }
             else {
                 setCurrentDirection(Direction.down);
-                localCenter_.add(Direction.toVector2d(Direction.down).copy().times(dt * GHOST_SPEED));
+                moveToDirection(Direction.down,dt);
             }
         }
     }
