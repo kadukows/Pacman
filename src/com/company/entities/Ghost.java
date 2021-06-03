@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Ghost {
-    protected static final double GHOST_SPEED = 4.5;
+    protected double GHOST_SPEED = 4.5;
     private final Color COLOR;
     private static final Rectangle2D.Double RECT = new Rectangle2D.Double(0, 0, 0.6, 0.6);
     public final Vector2d localCenter_;
@@ -37,6 +37,13 @@ public class Ghost {
         COLOR = new Color(red, green, blue);
         currentDirection_ = direction;
     }
+
+    /**
+     * Set current speed of ghost.
+     * @param speed speed of ghost
+     */
+    public void setGHOST_SPEED(double speed) { GHOST_SPEED = GHOST_SPEED+speed; }
+
 
     /**
      * Returns current direction of ghost.
@@ -155,31 +162,23 @@ public class Ghost {
         availableDirections.remove(forbiddenDirection);
         Collections.shuffle(availableDirections);
 
-        for(int i = 0; i < availableDirections.size(); i++){
-            if (couldMoveToDirection(availableDirections.get(i), dt)){
-                setCurrentDirection(availableDirections.get(i));
-                moveToDirection(availableDirections.get(i), dt);
-            }
+        if (Direction.up != forbiddenDirection && couldMoveToDirection(Direction.up, dt)){
+            setCurrentDirection(Direction.up);
+            moveToDirection(Direction.up, dt);
         }
 
-
-//        if (Direction.up != forbiddenDirection && couldMoveToDirection(Direction.up, dt)){
-//            setCurrentDirection(Direction.up);
-//            moveToDirection(Direction.up, dt);
-//        }
-//
-//        else if (Direction.down != forbiddenDirection && couldMoveToDirection(Direction.down, dt)){
-//            setCurrentDirection(Direction.down);
-//            moveToDirection(Direction.down, dt);
-//        }
-//        else if (Direction.right != forbiddenDirection && couldMoveToDirection(Direction.right, dt)){
-//            setCurrentDirection(Direction.right);
-//            moveToDirection(Direction.right, dt);
-//        }
-//        else if (Direction.left != forbiddenDirection && couldMoveToDirection(Direction.left, dt)){
-//            setCurrentDirection(Direction.left);
-//            moveToDirection(Direction.left, dt);
-//        }
+        else if (Direction.down != forbiddenDirection && couldMoveToDirection(Direction.down, dt)){
+            setCurrentDirection(Direction.down);
+            moveToDirection(Direction.down, dt);
+        }
+        else if (Direction.right != forbiddenDirection && couldMoveToDirection(Direction.right, dt)){
+            setCurrentDirection(Direction.right);
+            moveToDirection(Direction.right, dt);
+        }
+        else if (Direction.left != forbiddenDirection && couldMoveToDirection(Direction.left, dt)){
+            setCurrentDirection(Direction.left);
+            moveToDirection(Direction.left, dt);
+        }
     }
 
 

@@ -1,10 +1,7 @@
 package com.company;
 
 import com.company.Vector2d.ConstVector2d;
-import com.company.entities.Blinky;
-import com.company.entities.Clyde;
-import com.company.entities.Pinky;
-import com.company.entities.Player;
+import com.company.entities.*;
 import com.company.field.AbstractField;
 import com.company.field.WalkableField;
 import com.company.fieldmatrixfactory.IFieldMatrixFactory;
@@ -28,6 +25,7 @@ public class Board extends JPanel {
     private Blinky blinky_;
     private Pinky pinky_;
     private Clyde clyde_;
+    private Inky inky_;
     private final KeyboardManager keyboardManager_;
     private final HighscoreManager highscoreManager_;
     private final String levelName_;
@@ -72,6 +70,13 @@ public class Board extends JPanel {
         }
         else if(jsonName.equals(s2)){
             clyde_ = new Clyde(14,8,255,104,0,this,  Direction.right);
+        }
+
+        if(jsonName.equals(s1)) {
+            inky_ = new Inky(10, 11, 62, 166, 238, this,  Direction.left);
+        }
+        else if(jsonName.equals(s2)){
+            inky_ = new Inky(15,9,62,166,238,this,  Direction.right);
         }
 
 
@@ -129,6 +134,12 @@ public class Board extends JPanel {
             clyde_.draw(g2d);
         }catch (Exception e){
             System.out.println("Clyde not created");
+        }
+
+        try {
+            inky_.draw(g2d);
+        }catch (Exception e){
+            System.out.println("Inky not created");
         }
 
         g2d.setTransform(oldTransform);
@@ -219,6 +230,7 @@ public class Board extends JPanel {
             blinky_.algorithmBlinky(dt, player_);
             pinky_.algorithmPinky(dt,player_);
             clyde_.algorithmClyde(dt, player_);
+            inky_.algorithmInky(dt, player_);
             repaint();
         }
     }

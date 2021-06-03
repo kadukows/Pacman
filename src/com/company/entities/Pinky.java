@@ -34,18 +34,18 @@ public class Pinky extends Ghost implements Runnable {
         Pinky_position = getLocalCenter();
         direction = getCurrentDirection();
 
-
+        double PARAM  = -1;
 
         if (direction == Direction.up){
-            if (Double.compare(Pacman_position.getY(), Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
+            if (Double.compare(Pacman_position.getY() - PARAM, Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
                 setCurrentDirection(Direction.up);
                 moveToDirection(Direction.up,dt);
             }
-            else if( Double.compare(Pacman_position.getX(), Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt)){
+            else if( Double.compare(Pacman_position.getX()+PARAM, Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt)){
                 setCurrentDirection(Direction.right);
                 moveToDirection(Direction.right,dt);
             }
-            else if ( Double.compare(Pacman_position.getX(), Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
+            else if ( Double.compare(Pacman_position.getX()-PARAM, Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
                 setCurrentDirection(Direction.left);
                 moveToDirection(Direction.left,dt);
             }
@@ -63,17 +63,17 @@ public class Pinky extends Ghost implements Runnable {
             }
         }
         else if ( direction == Direction.down ){
-            if( Double.compare(Pacman_position.getX(), Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt)){
+            if (Double.compare(Pacman_position.getY()+PARAM, Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
+                setCurrentDirection(Direction.down);
+                moveToDirection(Direction.down,dt);
+            }
+            else if( Double.compare(Pacman_position.getX()+PARAM, Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt)){
                 setCurrentDirection(Direction.right);
                 moveToDirection(Direction.right,dt);
             }
-            else if ( Double.compare(Pacman_position.getX(), Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
+            else if ( Double.compare(Pacman_position.getX()-PARAM, Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
                 setCurrentDirection(Direction.left);
                 moveToDirection(Direction.left,dt);
-            }
-            else if (Double.compare(Pacman_position.getY(), Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
-                setCurrentDirection(Direction.down);
-                moveToDirection(Direction.down,dt);
             }
             else if (couldMoveToDirection(Direction.down,dt)){
                 setCurrentDirection(Direction.down);
@@ -89,15 +89,15 @@ public class Pinky extends Ghost implements Runnable {
             }
         }
         else if ( direction == Direction.left ){
-            if ( Double.compare(Pacman_position.getX(), Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
+            if ( Double.compare(Pacman_position.getX()-PARAM, Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
                 setCurrentDirection(Direction.left);
                 moveToDirection(Direction.left,dt);
             }
-            else if( Double.compare(Pacman_position.getY(), Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
+            else if( Double.compare(Pacman_position.getY()-PARAM, Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
                 setCurrentDirection(Direction.up);
                 moveToDirection(Direction.up,dt);
             }
-            else if( Double.compare(Pacman_position.getY(), Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
+            else if( Double.compare(Pacman_position.getY()+PARAM, Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
                 setCurrentDirection(Direction.down);
                 moveToDirection(Direction.down,dt);
             }
@@ -109,21 +109,25 @@ public class Pinky extends Ghost implements Runnable {
                 setCurrentDirection(Direction.up);
                 moveToDirection(Direction.up,dt);
             }
-            else {
+            else if  (couldMoveToDirection(Direction.down,dt)) {
                 setCurrentDirection(Direction.down);
                 moveToDirection(Direction.down,dt);
             }
+            else if (!couldMoveToDirection(Direction.down,dt) && !couldMoveToDirection(Direction.up,dt) && !couldMoveToDirection(Direction.left,dt)){
+                setCurrentDirection(Direction.right);
+                moveToDirection(Direction.right, dt);
+            }
         }
-        else {
-            if ( Double.compare(Pacman_position.getX(), Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt) ){
+        else if ( direction == Direction.right ){
+            if ( Double.compare(Pacman_position.getX()+PARAM, Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt) ){
                 setCurrentDirection(Direction.right);
                 moveToDirection(Direction.right,dt);
             }
-            else if( Double.compare(Pacman_position.getY(), Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
+            else if( Double.compare(Pacman_position.getY()-PARAM, Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
                 setCurrentDirection(Direction.up);
                 moveToDirection(Direction.up,dt);
             }
-            else if( Double.compare(Pacman_position.getY(), Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
+            else  if( Double.compare(Pacman_position.getY()+PARAM, Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
                 setCurrentDirection(Direction.down);
                 moveToDirection(Direction.down,dt);
             }
@@ -135,11 +139,17 @@ public class Pinky extends Ghost implements Runnable {
                 setCurrentDirection(Direction.up);
                 moveToDirection(Direction.up,dt);
             }
-            else {
+            else  if  (couldMoveToDirection(Direction.down,dt)) {
                 setCurrentDirection(Direction.down);
                 moveToDirection(Direction.down,dt);
             }
+            else if (!couldMoveToDirection(Direction.down,dt) && !couldMoveToDirection(Direction.up,dt) && !couldMoveToDirection(Direction.right,dt)){
+                setCurrentDirection(Direction.left);
+                moveToDirection(Direction.left, dt);
+            }
         }
+
+
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.company.Vector2d.ConstVector2d;
 
 public class Blinky extends Ghost implements Runnable{
 
+    private double time = 0;
     /**
      * Default constructor for Ghost class.
      *
@@ -21,37 +22,145 @@ public class Blinky extends Ghost implements Runnable{
     }
 
 
-    /**
-     * Manhattan metric calculation
-     * @param Pacman_position pacman position on the bord
-     * @param Clyde_position Clyde position on the bord
-     * @return distance between Pacman and Clyde
-     */
-    private double manhattanMetric(ConstVector2d Pacman_position, ConstVector2d Clyde_position ){
-        double length;
-
-        length = Math.abs(Pacman_position.getX()-Clyde_position.getX()) + Math.abs(Pacman_position.getY()-Clyde_position.getY());
-        return length;
-    }
-
-
 
     public void algorithmBlinky(double dt, Player player) {
-
-
-
+        time = time + dt;
+        if (time > 5){
+            time = 0;
+            if (GHOST_SPEED < 8.25){
+            setGHOST_SPEED(0.25);
+            }
+        }
         Direction direction;
-
         ConstVector2d Pacman_position;
-        ConstVector2d Blinky_position;
+        ConstVector2d Pinky_position;
 
         Pacman_position = player.getLocalCenter();
-        Blinky_position = getLocalCenter();
+        Pinky_position = getLocalCenter();
+        direction = getCurrentDirection();
 
-        double length = manhattanMetric(Pacman_position, Blinky_position);
+        double PARAM  = 0;
+
+        if (direction == Direction.up){
+            if (Double.compare(Pacman_position.getY() - PARAM, Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
+                setCurrentDirection(Direction.up);
+                moveToDirection(Direction.up,dt);
+            }
+            else if( Double.compare(Pacman_position.getX()+PARAM, Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt)){
+                setCurrentDirection(Direction.right);
+                moveToDirection(Direction.right,dt);
+            }
+            else if ( Double.compare(Pacman_position.getX()-PARAM, Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
+                setCurrentDirection(Direction.left);
+                moveToDirection(Direction.left,dt);
+            }
+            else if (couldMoveToDirection(Direction.up,dt)){
+                setCurrentDirection(Direction.up);
+                moveToDirection(Direction.up,dt);
+            }
+            else if (couldMoveToDirection(Direction.right,dt)){
+                setCurrentDirection(Direction.right);
+                moveToDirection(Direction.right,dt);
+            }
+            else {
+                setCurrentDirection(Direction.left);
+                moveToDirection(Direction.left,dt);
+            }
+        }
+        else if ( direction == Direction.down ){
+            if (Double.compare(Pacman_position.getY()+PARAM, Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
+                setCurrentDirection(Direction.down);
+                moveToDirection(Direction.down,dt);
+            }
+            else if( Double.compare(Pacman_position.getX()+PARAM, Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt)){
+                setCurrentDirection(Direction.right);
+                moveToDirection(Direction.right,dt);
+            }
+            else if ( Double.compare(Pacman_position.getX()-PARAM, Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
+                setCurrentDirection(Direction.left);
+                moveToDirection(Direction.left,dt);
+            }
+            else if (couldMoveToDirection(Direction.down,dt)){
+                setCurrentDirection(Direction.down);
+                moveToDirection(Direction.down,dt);
+            }
+            else if (couldMoveToDirection(Direction.right,dt)){
+                setCurrentDirection(Direction.right);
+                moveToDirection(Direction.right,dt);
+            }
+            else {
+                setCurrentDirection(Direction.left);
+                moveToDirection(Direction.left,dt);
+            }
+        }
+        else if ( direction == Direction.left ){
+            if ( Double.compare(Pacman_position.getX()-PARAM, Pinky_position.getX()) < 0 && couldMoveToDirection(Direction.left,dt) ){
+                setCurrentDirection(Direction.left);
+                moveToDirection(Direction.left,dt);
+            }
+            else if( Double.compare(Pacman_position.getY()-PARAM, Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
+                setCurrentDirection(Direction.up);
+                moveToDirection(Direction.up,dt);
+            }
+            else if( Double.compare(Pacman_position.getY()+PARAM, Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
+                setCurrentDirection(Direction.down);
+                moveToDirection(Direction.down,dt);
+            }
+            else if (couldMoveToDirection(Direction.left,dt)){
+                setCurrentDirection(Direction.left);
+                moveToDirection(Direction.left,dt);
+            }
+            else if (couldMoveToDirection(Direction.up,dt)){
+                setCurrentDirection(Direction.up);
+                moveToDirection(Direction.up,dt);
+            }
+            else if  (couldMoveToDirection(Direction.down,dt)) {
+                setCurrentDirection(Direction.down);
+                moveToDirection(Direction.down,dt);
+            }
+            else if (!couldMoveToDirection(Direction.down,dt) && !couldMoveToDirection(Direction.up,dt) && !couldMoveToDirection(Direction.left,dt)){
+                setCurrentDirection(Direction.right);
+                moveToDirection(Direction.right, dt);
+            }
+        }
+        else if ( direction == Direction.right ){
+
+            if ( Double.compare(Pacman_position.getX()+PARAM, Pinky_position.getX()) > 0 && couldMoveToDirection(Direction.right,dt) ){
+                setCurrentDirection(Direction.right);
+                moveToDirection(Direction.right,dt);
+            }
+            else if( Double.compare(Pacman_position.getY()-PARAM, Pinky_position.getY()) < 0 && couldMoveToDirection(Direction.up,dt) ){
+                setCurrentDirection(Direction.up);
+                moveToDirection(Direction.up,dt);
+            }
+            else  if( Double.compare(Pacman_position.getY()+PARAM, Pinky_position.getY()) > 0 && couldMoveToDirection(Direction.down,dt) ){
+                setCurrentDirection(Direction.down);
+                moveToDirection(Direction.down,dt);
+            }
+            else if (couldMoveToDirection(Direction.right,dt)){
+                setCurrentDirection(Direction.right);
+                moveToDirection(Direction.right,dt);
+            }
+            else if (couldMoveToDirection(Direction.up,dt)){
+                setCurrentDirection(Direction.up);
+                moveToDirection(Direction.up,dt);
+            }
+            else  if  (couldMoveToDirection(Direction.down,dt)) {
+                setCurrentDirection(Direction.down);
+                moveToDirection(Direction.down,dt);
+            }
+            else if (!couldMoveToDirection(Direction.down,dt) && !couldMoveToDirection(Direction.up,dt) && !couldMoveToDirection(Direction.right,dt)){
+                setCurrentDirection(Direction.left);
+                moveToDirection(Direction.left, dt);
+            }
+        }
 
 
-    }
+       }
+
+
+
+
 
     @Override
     public void run() {

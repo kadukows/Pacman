@@ -51,6 +51,15 @@ public class Player {
     }
 
     /**
+     * Returns current direction of Pacman.
+     *
+     * @return current Direction
+     */
+    public Direction getDirection_() {
+        return direction_;
+    }
+
+    /**
      * Adds a listener that is called every time player makes new move.
      *
      * @param runnable lambda/function to be called
