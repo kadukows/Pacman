@@ -16,13 +16,18 @@ public class Blinky extends Ghost implements Runnable{
      * @param green is color RGB for ghost
      * @param blue  is color RGB for ghost
      * @param board board this ghost belongs to
+     * @param direction Blinky direction
      */
     public Blinky(int x, int y, int red, int green, int blue, Board board, Direction direction) {
         super(x, y, red, green, blue, board, direction);
     }
 
 
-
+    /**
+     * The red ghost "Blinky" movement rules
+     * @param dt delta time
+     * @param player pacman controlled by the player
+     */
     public void algorithmBlinky(double dt, Player player) {
         time = time + dt;
         if (time > 5){

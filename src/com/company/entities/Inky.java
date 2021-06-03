@@ -20,13 +20,17 @@ public class Inky  extends Ghost implements Runnable{
      * @param green     is color RGB for ghost
      * @param blue      is color RGB for ghost
      * @param board     board this ghost belongs to
-     * @param direction
+     * @param direction Inky direction
      */
     public Inky(int x, int y, int red, int green, int blue, Board board, Direction direction) {
         super(x, y, red, green, blue, board, direction);
     }
 
-
+    /**
+     * The blue ghost "Inky" movement rules
+     * @param dt delta time
+     * @param player acman controlled by the player
+     */
 
     public void algorithmInky(double dt, Player player){
         time = time + dt;
@@ -74,6 +78,11 @@ public class Inky  extends Ghost implements Runnable{
         return length;
     }
 
+    /**
+     * The ghost "Clyde" behaviors
+     * @param dt delta time
+     * @param player Pacman controlled by the player
+     */
 
     private void ClydeBehaviours(double dt, Player player){
         Direction direction;
@@ -149,6 +158,11 @@ public class Inky  extends Ghost implements Runnable{
 
     }
 
+    /**
+     * The ghost "Blinky" behaviors
+     * @param dt delta time
+     * @param player Pacman controlled by the player
+     */
     private void BlinkyBehaviours(double dt, Player player){
 
         Direction direction;
@@ -276,7 +290,11 @@ public class Inky  extends Ghost implements Runnable{
         }
 
     }
-
+    /**
+     * The ghost "Pinky" behaviors
+     * @param dt delta time
+     * @param player Pacman controlled by the player
+     */
     private void PinkyBehaviours(double dt, Player player){
         Direction direction;
         ConstVector2d Pacman_position;

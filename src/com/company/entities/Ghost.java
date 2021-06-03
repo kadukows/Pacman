@@ -29,6 +29,7 @@ public class Ghost {
      * @param green is color RGB for ghost
      * @param blue  is color RGB for ghost
      * @param board board this ghost belongs to
+     * @param direction Ghost direction
      */
 
     public Ghost(int x, int y, int red, int green, int blue, @NotNull Board board, Direction direction) {

@@ -50,14 +50,6 @@ public class Player {
         nextDirection_ = null;
     }
 
-    /**
-     * Returns current direction of Pacman.
-     *
-     * @return current Direction
-     */
-    public Direction getDirection_() {
-        return direction_;
-    }
 
     /**
      * Adds a listener that is called every time player makes new move.
@@ -169,7 +161,7 @@ public class Player {
     /**
      * Shoves player to wall (last move).
      *
-     * @param direction
+     * @param direction direction
      */
     private void shoveToWall(Direction direction) {
         ConstVector2d middlePoint = localCenter_.copy().add(Direction.toVector2d(direction).copy().times(0.5));
