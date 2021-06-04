@@ -15,23 +15,23 @@ public class Pinky extends Ghost implements Runnable {
      * @param blue  is color RGB for ghost
      * @param board board this ghost belongs to
      * @param direction Pinky direction
+     * @param player Pacman
+     * @param dT delta time
      */
-    public Pinky(int x, int y, int red, int green, int blue, Board board, Direction direction) {
-        super(x, y, red, green, blue, board, direction);
+    public Pinky(int x, int y, int red, int green, int blue, Board board, Direction direction, Player player, Double dT) {
+        super(x, y, red, green, blue, board, direction, player, dT);
     }
 
     /**
      * The pink ghost "Pinky" movement rules
-     * @param dt delta time
-     * @param player pacman controlled by the player
      */
-    public void algorithmPinky(double dt, Player player) {
+    public void algorithmPinky() {
 
         Direction direction;
         ConstVector2d Pacman_position;
         ConstVector2d Pinky_position;
 
-        Pacman_position = player.getLocalCenter();
+        Pacman_position = player_.getLocalCenter();
         Pinky_position = getLocalCenter();
         direction = getCurrentDirection();
 
@@ -155,6 +155,6 @@ public class Pinky extends Ghost implements Runnable {
 
     @Override
     public void run() {
-
+        algorithmPinky();
     }
 }

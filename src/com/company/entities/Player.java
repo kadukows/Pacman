@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 import static java.awt.event.KeyEvent.*;
 
-public class Player {
+public class Player implements Runnable{
     private static final double PLAYER_SPEED = 8.5;
     private static final Color COLOR = new Color(255, 255, 0);
     private static final Rectangle2D.Double RECT = new Rectangle2D.Double(0, 0, 0.6, 0.6);
@@ -33,6 +33,7 @@ public class Player {
     private final List<Runnable> onPlayerMoveListeners_;
     private Direction direction_;
     private Direction nextDirection_;
+    private double dt;
 
     /**
      * Default constructor for Player class.
@@ -41,13 +42,14 @@ public class Player {
      * @param y starting y-coordinate for player
      * @param board board this player belongs to
      */
-    public Player(int x, int y, @NotNull Board board) {
+    public Player(int x, int y, @NotNull Board board, double dT) {
         localCenter_ = new Vector2d(x + 0.5, y + 0.5);
         board_ = board;
         onPlayerMoveListeners_ = new ArrayList<>();
 
         direction_ = Direction.up;
         nextDirection_ = null;
+        dt = dT;
     }
 
 
@@ -171,10 +173,8 @@ public class Player {
 
     /**
      * Main function that processes player update.
-     *
-     * @param dt delta time
      */
-    public void update(double dt) {
+    public void update() {
         KEY_TO_DIRECTION.forEach((Integer key_code, Direction direction) -> {
             if (board_.getKeyboardManager().isDown(key_code)) {
                 nextDirection_ = direction;
@@ -217,5 +217,10 @@ public class Player {
     public void setLocalCenter(ConstVector2d new_pos) {
         localCenter_.set(new_pos.getX(), new_pos.getY());
         notifyListeners();
+    }
+
+    @Override
+    public void run() {
+        update();
     }
 }

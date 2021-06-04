@@ -35,6 +35,12 @@ public class Board extends JPanel {
     private Boolean gameWon_ = null;
     private int score_ = 0;
 
+    Thread threadBlinky;
+    Thread threadPinky;
+    Thread threadClyde;
+    Thread threadInky;
+
+
     /**
      * Default constructor for a class.
      *
@@ -45,38 +51,47 @@ public class Board extends JPanel {
         keyboardManager_ = keyboardManager;
         highscoreManager_ = highscoreManager;
         levelName_ = levelName;
-        player_ = new Player(2, 2, this);
+        double deltaTime = 1 / 60.0;
+        player_ = new Player(2, 2, this, deltaTime);
 
         String jsonName = fieldMatrixFactory.getFilename();
         String s1 = "test1.json";
         String s2 = "test2.json";
 
         if(jsonName.equals(s1)) {
-            blinky_ = new Blinky(9, 9, 255, 0, 0, this, Direction.left);
+            blinky_ = new Blinky(9, 9, 255, 0, 0, this, Direction.left, player_, deltaTime);
+            Thread threadBlinky = new Thread(blinky_);
         }
         else if(jsonName.equals(s2)){
-            blinky_ = new Blinky(15,11,255,0,0,this,  Direction.left);
+            blinky_ = new Blinky(15,11,255,0,0,this,  Direction.left, player_,deltaTime);
+            Thread threadBlinky = new Thread(blinky_);
         }
 
         if(jsonName.equals(s1)) {
-            pinky_ = new Pinky(8, 11, 243, 0, 255, this, Direction.left);
+            pinky_ = new Pinky(8, 11, 243, 0, 255, this, Direction.left, player_, deltaTime);
+            Thread threadPinky = new Thread(pinky_);
         }
         else if(jsonName.equals(s2)){
-            pinky_ = new Pinky(17,8,243,0,255,this,  Direction.left);
+            pinky_ = new Pinky(17,8,243,0,255,this,  Direction.left, player_, deltaTime);
+            Thread threadPinky = new Thread(pinky_);
         }
 
         if(jsonName.equals(s1)) {
-            clyde_ = new Clyde(9, 12, 255, 104, 0, this,  Direction.up);
+            clyde_ = new Clyde(9, 12, 255, 104, 0, this,  Direction.up, player_, deltaTime);
+            Thread threadClyde = new Thread(clyde_);
         }
         else if(jsonName.equals(s2)){
-            clyde_ = new Clyde(14,8,255,104,0,this,  Direction.right);
+            clyde_ = new Clyde(14,8,255,104,0,this,  Direction.right, player_, deltaTime);
+            Thread threadClyde = new Thread(clyde_);
         }
 
         if(jsonName.equals(s1)) {
-            inky_ = new Inky(10, 11, 62, 166, 238, this,  Direction.left);
+            inky_ = new Inky(10, 11, 62, 166, 238, this,  Direction.left, player_,deltaTime);
+            Thread threadInky = new Thread(inky_);
         }
         else if(jsonName.equals(s2)){
-            inky_ = new Inky(15,9,62,166,238,this,  Direction.right);
+            inky_ = new Inky(15,9,62,166,238,this,  Direction.right, player_, deltaTime);
+            Thread threadInky = new Thread(inky_);
         }
 
 
@@ -88,7 +103,12 @@ public class Board extends JPanel {
 
         setFocusable(true);
 
-        timer_ = new Timer(1000 / 60, (ActionEvent avt) -> this.update(1 / 60.0));
+//        threadBlinky.start();
+//        threadPinky.start();
+//        threadClyde.start();
+
+
+        timer_ = new Timer(1000 / 60, (ActionEvent avt) -> this.update(deltaTime));
         timer_.start();
     }
 
@@ -155,7 +175,9 @@ public class Board extends JPanel {
         if (hasGameEnded()) {
             String s = "You have " + (gameWon_ ? "won!" : "lost.");
             g2d.drawString(s, 20, 30);
+
         }
+
     }
 
     /**
@@ -226,11 +248,11 @@ public class Board extends JPanel {
     public void update(double dt) {
 
         if (!hasGameEnded()) {
-            player_.update(dt);
-            blinky_.algorithmBlinky(dt, player_);
-            pinky_.algorithmPinky(dt,player_);
-            clyde_.algorithmClyde(dt, player_);
-            inky_.algorithmInky(dt, player_);
+            player_.update();
+            blinky_.algorithmBlinky();
+            pinky_.algorithmPinky();
+            clyde_.algorithmClyde();
+          inky_.algorithmInky();
             repaint();
         }
     }
@@ -248,7 +270,30 @@ public class Board extends JPanel {
      * @return true if game ended, false otherwise
      */
     public boolean hasGameEnded() {
-        return gameWon_ != null;
+
+        if (Math.abs(player_.getLocalCenter().getX() - blinky_.getLocalCenter().getX()) < 0.1 &&
+                Math.abs(player_.getLocalCenter().getY() - blinky_.getLocalCenter().getY()) < 0.1) {
+            timer_.stop();
+            return gameWon_ = false;
+        }
+        else if (Math.abs(player_.getLocalCenter().getX() - inky_.getLocalCenter().getX()) < 0.1 &&
+                Math.abs(player_.getLocalCenter().getY() - inky_.getLocalCenter().getY()) < 0.1) {
+            timer_.stop();
+            return gameWon_ = false;
+        }
+        else if (Math.abs(player_.getLocalCenter().getX() - pinky_.getLocalCenter().getX()) < 0.1 &&
+                Math.abs(player_.getLocalCenter().getY() - pinky_.getLocalCenter().getY()) < 0.1) {
+            timer_.stop();
+            return gameWon_ = false;
+        }
+        else if (Math.abs(player_.getLocalCenter().getX() - clyde_.getLocalCenter().getX()) < 0.1 &&
+                Math.abs(player_.getLocalCenter().getY() - clyde_.getLocalCenter().getY()) < 0.1) {
+            timer_.stop();
+            return gameWon_ = false;
+        }
+        else{
+            return gameWon_ != null;
+        }
     }
 
     /**

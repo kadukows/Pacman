@@ -17,9 +17,11 @@ public class Clyde extends Ghost implements Runnable{
      * @param green is color RGB for ghost
      * @param blue  is color RGB for ghost
      * @param board board this ghost belongs to
+     * @param player Pacman
+     * @param dT delta time
      */
-    public Clyde(int x, int y, int red, int green, int blue, Board board, Direction direction) {
-        super(x, y, red, green, blue, board, direction);
+    public Clyde(int x, int y, int red, int green, int blue, Board board, Direction direction, Player player, Double dT) {
+        super(x, y, red, green, blue, board, direction, player, dT);
     }
 
 
@@ -39,10 +41,8 @@ public class Clyde extends Ghost implements Runnable{
 
     /**
      * The orange ghost "Clyde" movement rules
-     * @param dt delta time
-     * @param player pacman controlled by the player
      */
-    public void algorithmClyde(double dt, Player player) {
+    public void algorithmClyde() {
 
         Direction direction;
         Direction forbiddenDirection;
@@ -52,7 +52,7 @@ public class Clyde extends Ghost implements Runnable{
         boolean flag;
 
         flag = false;
-        Pacman_position = player.getLocalCenter();
+        Pacman_position = player_.getLocalCenter();
         Clyde_position = getLocalCenter();
 
         length = manhattanMetric(Pacman_position, Clyde_position);
@@ -120,6 +120,6 @@ public class Clyde extends Ghost implements Runnable{
 
     @Override
     public void run() {
-
+        algorithmClyde();
     }
 }

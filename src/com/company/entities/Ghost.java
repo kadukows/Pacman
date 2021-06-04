@@ -13,12 +13,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Ghost {
+    protected final Player player_;
     protected double GHOST_SPEED = 4.5;
     private final Color COLOR;
     private static final Rectangle2D.Double RECT = new Rectangle2D.Double(0, 0, 0.6, 0.6);
     public final Vector2d localCenter_;
     protected final Board board_;
     protected Direction currentDirection_;
+    protected double dt;
+
 
     /**
      * Default constructor for Ghost class.
@@ -30,13 +33,17 @@ public class Ghost {
      * @param blue  is color RGB for ghost
      * @param board board this ghost belongs to
      * @param direction Ghost direction
+     * @param player Pacman
+     * @param dT delta time
      */
 
-    public Ghost(int x, int y, int red, int green, int blue, @NotNull Board board, Direction direction) {
+    public Ghost(int x, int y, int red, int green, int blue, @NotNull Board board, Direction direction, Player player, Double dT) {
         localCenter_ = new Vector2d(x + 0.5, y + 0.5);
         board_ = board;
         COLOR = new Color(red, green, blue);
         currentDirection_ = direction;
+        player_ = player;
+        dt = dT;
     }
 
     /**
@@ -192,8 +199,8 @@ public class Ghost {
         ConstVector2d upperLeftCorner = localCenter_.copy().add(-0.5, -0.5);
 
         g.setColor(COLOR);
-        RECT.x = upperLeftCorner.getX() + 0.2;
-        RECT.y = upperLeftCorner.getY() + 0.2;
+        RECT.x = upperLeftCorner.getX() + 0.3;
+        RECT.y = upperLeftCorner.getY() + 0.3;
         g.fill(RECT);
     }
 }
