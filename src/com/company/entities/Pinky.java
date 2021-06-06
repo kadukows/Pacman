@@ -4,7 +4,7 @@ import com.company.Board;
 import com.company.Direction;
 import com.company.Vector2d.ConstVector2d;
 
-public class Pinky extends Ghost implements Runnable {
+public class Pinky extends Ghost {
     /**
      * Default constructor for Ghost class.
      *
@@ -16,16 +16,17 @@ public class Pinky extends Ghost implements Runnable {
      * @param board board this ghost belongs to
      * @param direction Pinky direction
      * @param player Pacman
-     * @param dT delta time
      */
-    public Pinky(int x, int y, int red, int green, int blue, Board board, Direction direction, Player player, Double dT) {
-        super(x, y, red, green, blue, board, direction, player, dT);
+    public Pinky(int x, int y, int red, int green, int blue, Board board, Direction direction, Player player) {
+        super(x, y, red, green, blue, board, direction, player);
     }
 
     /**
      * The pink ghost "Pinky" movement rules
+     *
+     * @param dt delta time
      */
-    public void algorithmPinky() {
+    public void algorithmPinky(double dt) {
 
         Direction direction;
         ConstVector2d Pacman_position;
@@ -154,7 +155,7 @@ public class Pinky extends Ghost implements Runnable {
     }
 
     @Override
-    public void run() {
-        algorithmPinky();
+    public void update(double dt) {
+        algorithmPinky(dt);
     }
 }

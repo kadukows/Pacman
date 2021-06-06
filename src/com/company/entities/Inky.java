@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class Inky  extends Ghost implements Runnable{
+public class Inky  extends Ghost {
     private double time = 0;
     private int idBehaviours;
     /**
@@ -22,16 +22,17 @@ public class Inky  extends Ghost implements Runnable{
      * @param board     board this ghost belongs to
      * @param direction Inky direction
      * @param player Pacman
-     * @param dT delta time
      */
-    public Inky(int x, int y, int red, int green, int blue, Board board, Direction direction, Player player, Double dT) {
-        super(x, y, red, green, blue, board, direction, player, dT);
+    public Inky(int x, int y, int red, int green, int blue, Board board, Direction direction, Player player) {
+        super(x, y, red, green, blue, board, direction, player);
     }
 
     /**
      * The blue ghost "Inky" movement rules
+     *
+     * @param dt delta time
      */
-    public void algorithmInky(){
+    public void algorithmInky(double dt){
         time = time + dt;
         Random r = new Random();
 
@@ -57,11 +58,6 @@ public class Inky  extends Ghost implements Runnable{
                 }
             }
         }
-    }
-
-    @Override
-    public void run() {
-
     }
 
     /**
@@ -147,12 +143,12 @@ public class Inky  extends Ghost implements Runnable{
                 }
             }
             if (!flag){
-                MoveToAvailableDirection(forbiddenDirection, dt);
+                moveToAvailableDirection(forbiddenDirection, dt);
                 flag = true;
             }
         }
         if (!flag) {
-            MoveToAvailableDirection(forbiddenDirection, dt);
+            moveToAvailableDirection(forbiddenDirection, dt);
         }
 
     }
@@ -417,7 +413,10 @@ public class Inky  extends Ghost implements Runnable{
                 moveToDirection(Direction.left, dt);
             }
         }
-
     }
 
+    @Override
+    public void update(double dt) {
+        algorithmInky(dt);
+    }
 }

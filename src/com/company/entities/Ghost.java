@@ -12,15 +12,15 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Ghost {
-    protected final Player player_;
-    protected double GHOST_SPEED = 4.5;
-    private final Color COLOR;
+public abstract class Ghost extends AbstractEntity {
     private static final Rectangle2D.Double RECT = new Rectangle2D.Double(0, 0, 0.6, 0.6);
+
+    protected final Player player_;
+    protected double speed_ = 4.5;
+    private final Color color_;
     public final Vector2d localCenter_;
     protected final Board board_;
     protected Direction currentDirection_;
-    protected double dt;
 
 
     /**
@@ -34,23 +34,20 @@ public class Ghost {
      * @param board board this ghost belongs to
      * @param direction Ghost direction
      * @param player Pacman
-     * @param dT delta time
      */
-
-    public Ghost(int x, int y, int red, int green, int blue, @NotNull Board board, Direction direction, Player player, Double dT) {
+    public Ghost(int x, int y, int red, int green, int blue, @NotNull Board board, Direction direction, Player player) {
         localCenter_ = new Vector2d(x + 0.5, y + 0.5);
         board_ = board;
-        COLOR = new Color(red, green, blue);
+        color_ = new Color(red, green, blue);
         currentDirection_ = direction;
         player_ = player;
-        dt = dT;
     }
 
     /**
      * Set current speed of ghost.
-     * @param speed speed of ghost
+     * @param speed_ speed of ghost
      */
-    public void setGHOST_SPEED(double speed) { GHOST_SPEED = GHOST_SPEED+speed; }
+    public void setSpeed(double speed_) { this.speed_ = this.speed_ + speed_; }
 
 
     /**
@@ -63,6 +60,8 @@ public class Ghost {
 
     /**
      * Set current direction of ghost.
+     *
+     * @param direction direction to set to
      */
     public void setCurrentDirection(Direction direction) { currentDirection_ = direction; }
 
@@ -89,13 +88,13 @@ public class Ghost {
         ConstVector2d middlePointDelta = Direction.toVector2d(direction).copy().times(0.5);
         ConstVector2d middlePoint = localCenter_.copy()
                 .add(middlePointDelta)
-                .add(Direction.toVector2d(direction).copy().times(dt * GHOST_SPEED));
+                .add(Direction.toVector2d(direction).copy().times(dt * speed_));
 
         boolean[] invertedArray = new boolean[] {false, true};
         for (boolean inverted : invertedArray) {
             pointsToCheck.add(middlePoint.copy()
                     .add(middlePointDelta.copy()
-                            .rot90(inverted).times(0.7)));
+                            .rot90(inverted).times(0.8)));
         }
 
         for (ConstVector2d point : pointsToCheck) {
@@ -115,8 +114,10 @@ public class Ghost {
      * @param dt delta time, indicates how much to move
      */
     protected void moveToDirection(Direction direction, double dt) {
-        if (!couldMoveToDirection(direction, dt)) throw new RuntimeException();
-        localCenter_.add(Direction.toVector2d(direction).copy().times(dt * GHOST_SPEED));
+        if (!couldMoveToDirection(direction, dt))
+            throw new RuntimeException();
+
+        localCenter_.add(Direction.toVector2d(direction).copy().times(dt * speed_));
 
         // centering
         switch (direction) {
@@ -124,6 +125,13 @@ public class Ghost {
             case down: localCenter_.setX(Math.floor(localCenter_.getX()) + 0.5); break;
             case left:
             case right: localCenter_.setY(Math.floor(localCenter_.getY()) + 0.5); break;
+        }
+
+        AbstractField playerField = board_.getField(player_.getLocalCenter());
+        AbstractField myField = board_.getField(localCenter_);
+
+        if (playerField == myField) {
+            board_.forceStop();
         }
     }
 
@@ -133,7 +141,6 @@ public class Ghost {
      * @param direction the direction in which the ghost moves
      * @return the direction the ghost cannot move
      */
-
     protected Direction searchForbiddenDirection(Direction direction){
         Direction forbiddenDirection;
 
@@ -159,8 +166,7 @@ public class Ghost {
      * @param dt delta time
      */
 
-    protected void  MoveToAvailableDirection(Direction forbiddenDirection, double dt){
-
+    protected void moveToAvailableDirection(Direction forbiddenDirection, double dt){
         ArrayList<Direction> availableDirections = new ArrayList<>();
         availableDirections.add(Direction.up);
         availableDirections.add(Direction.down);
@@ -195,12 +201,13 @@ public class Ghost {
      *
      * @param g Graphics object used to draw
      */
+    @Override
     public void draw(Graphics2D g) {
         ConstVector2d upperLeftCorner = localCenter_.copy().add(-0.5, -0.5);
 
-        g.setColor(COLOR);
-        RECT.x = upperLeftCorner.getX() + 0.3;
-        RECT.y = upperLeftCorner.getY() + 0.3;
+        g.setColor(color_);
+        RECT.x = upperLeftCorner.getX() + 0.2;
+        RECT.y = upperLeftCorner.getY() + 0.2;
         g.fill(RECT);
     }
 }

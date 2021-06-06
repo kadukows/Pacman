@@ -4,7 +4,7 @@ import com.company.Board;
 import com.company.Direction;
 import com.company.Vector2d.ConstVector2d;
 
-public class Blinky extends Ghost implements Runnable{
+public class Blinky extends Ghost {
 
     private double time = 0;
     /**
@@ -18,22 +18,23 @@ public class Blinky extends Ghost implements Runnable{
      * @param board board this ghost belongs to
      * @param direction Blinky direction
      * @param player Pacman
-     * @param dT delta time
      */
-    public Blinky(int x, int y, int red, int green, int blue, Board board, Direction direction, Player player, Double dT) {
-        super(x, y, red, green, blue, board, direction, player, dT);
+    public Blinky(int x, int y, int red, int green, int blue, Board board, Direction direction, Player player) {
+        super(x, y, red, green, blue, board, direction, player);
     }
 
 
     /**
      * The red ghost "Blinky" movement rules
+     *
+     * @param dt delta time
      */
-    public void algorithmBlinky() {
+    public void algorithmBlinky(double dt) {
         time = time + dt;
         if (time > 5){
             time = 0;
-            if (GHOST_SPEED < 8.25){
-            setGHOST_SPEED(0.25);
+            if (speed_ < 8.25){
+            setSpeed(0.25);
             }
         }
         Direction direction;
@@ -159,16 +160,11 @@ public class Blinky extends Ghost implements Runnable{
                 moveToDirection(Direction.left, dt);
             }
         }
-
-
-       }
-
-
-
-
+    }
 
     @Override
-    public void run() {
-        algorithmBlinky();
+    public void update(double dt)
+    {
+        algorithmBlinky(dt);
     }
 }

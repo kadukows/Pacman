@@ -1,8 +1,12 @@
 {
   "items": [
     {
+      "levelName": "test2.json",
+      "score": 34
+    },
+    {
       "levelName": "test1.json",
-      "score": 6
+      "score": 26
     }
   ]
 }

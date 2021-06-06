@@ -7,7 +7,7 @@ import com.company.Vector2d.ConstVector2d;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Clyde extends Ghost implements Runnable{
+public class Clyde extends Ghost {
     /**
      * Default constructor for Ghost class.
      *
@@ -17,11 +17,11 @@ public class Clyde extends Ghost implements Runnable{
      * @param green is color RGB for ghost
      * @param blue  is color RGB for ghost
      * @param board board this ghost belongs to
+     * @param direction starting direction
      * @param player Pacman
-     * @param dT delta time
      */
-    public Clyde(int x, int y, int red, int green, int blue, Board board, Direction direction, Player player, Double dT) {
-        super(x, y, red, green, blue, board, direction, player, dT);
+    public Clyde(int x, int y, int red, int green, int blue, Board board, Direction direction, Player player) {
+        super(x, y, red, green, blue, board, direction, player);
     }
 
 
@@ -41,8 +41,10 @@ public class Clyde extends Ghost implements Runnable{
 
     /**
      * The orange ghost "Clyde" movement rules
+     *
+     * @param dt delta time
      */
-    public void algorithmClyde() {
+    public void algorithmClyde(double dt) {
 
         Direction direction;
         Direction forbiddenDirection;
@@ -107,19 +109,18 @@ public class Clyde extends Ghost implements Runnable{
                 }
             }
            if (!flag){
-               MoveToAvailableDirection(forbiddenDirection, dt);
+               moveToAvailableDirection(forbiddenDirection, dt);
                flag = true;
            }
         }
         if (!flag) {
-            MoveToAvailableDirection(forbiddenDirection, dt);
+            moveToAvailableDirection(forbiddenDirection, dt);
             }
 
     }
 
-
     @Override
-    public void run() {
-        algorithmClyde();
+    public void update(double dt) {
+        algorithmClyde(dt);
     }
 }

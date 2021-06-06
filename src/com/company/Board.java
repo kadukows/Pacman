@@ -10,6 +10,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.StreamSupport;
 
 /**
@@ -19,83 +23,73 @@ import java.util.stream.StreamSupport;
 public class Board extends JPanel {
     private static final int BLOCK_SIZE = 35;
     private static final Font FONT = new Font("Purisa", Font.PLAIN, 13);
+    private static final int MAX_THREAD_NO = 5;
 
     private final Matrix<AbstractField> fieldMatrix_;
-    private final Player player_;
-    private Blinky blinky_;
-    private Pinky pinky_;
-    private Clyde clyde_;
-    private Inky inky_;
+    private final ArrayList<AbstractEntity> entities_;
+
     private final KeyboardManager keyboardManager_;
     private final HighscoreManager highscoreManager_;
     private final String levelName_;
 
     private final Timer timer_;
+    private final ExecutorService threadPool_;
 
     private Boolean gameWon_ = null;
     private int score_ = 0;
 
-    Thread threadBlinky;
-    Thread threadPinky;
-    Thread threadClyde;
-    Thread threadInky;
+
 
 
     /**
      * Default constructor for a class.
      *
      * @param fieldMatrixFactory factory for fieldMatrix
+     * @param keyboardManager keyboard manager
+     * @param highscoreManager highscore manager
+     * @param levelName levelName
      */
     public Board(IFieldMatrixFactory fieldMatrixFactory, KeyboardManager keyboardManager, HighscoreManager highscoreManager, String levelName) {
         fieldMatrix_ = fieldMatrixFactory.create(this);
         keyboardManager_ = keyboardManager;
         highscoreManager_ = highscoreManager;
         levelName_ = levelName;
-        double deltaTime = 1 / 60.0;
-        player_ = new Player(2, 2, this, deltaTime);
+        entities_ = new ArrayList<>();
+        Player player = new Player(2, 2, this);
+        entities_.add(player);
 
         String jsonName = fieldMatrixFactory.getFilename();
         String s1 = "test1.json";
         String s2 = "test2.json";
 
         if(jsonName.equals(s1)) {
-            blinky_ = new Blinky(9, 9, 255, 0, 0, this, Direction.left, player_, deltaTime);
-            Thread threadBlinky = new Thread(blinky_);
+            entities_.add(new Blinky(9, 9, 255, 0, 0, this, Direction.left, player));
         }
         else if(jsonName.equals(s2)){
-            blinky_ = new Blinky(15,11,255,0,0,this,  Direction.left, player_,deltaTime);
-            Thread threadBlinky = new Thread(blinky_);
+            entities_.add(new Blinky(15,11,255,0,0,this,  Direction.left, player));
         }
 
         if(jsonName.equals(s1)) {
-            pinky_ = new Pinky(8, 11, 243, 0, 255, this, Direction.left, player_, deltaTime);
-            Thread threadPinky = new Thread(pinky_);
+            entities_.add(new Pinky(8, 11, 243, 0, 255, this, Direction.left, player));
         }
         else if(jsonName.equals(s2)){
-            pinky_ = new Pinky(17,8,243,0,255,this,  Direction.left, player_, deltaTime);
-            Thread threadPinky = new Thread(pinky_);
+            entities_.add(new Pinky(17,8,243,0,255,this,  Direction.left, player));
         }
 
         if(jsonName.equals(s1)) {
-            clyde_ = new Clyde(9, 12, 255, 104, 0, this,  Direction.up, player_, deltaTime);
-            Thread threadClyde = new Thread(clyde_);
+            entities_.add(new Clyde(9, 12, 255, 104, 0, this,  Direction.up, player));
         }
         else if(jsonName.equals(s2)){
-            clyde_ = new Clyde(14,8,255,104,0,this,  Direction.right, player_, deltaTime);
-            Thread threadClyde = new Thread(clyde_);
+            entities_.add(new Clyde(14,8,255,104,0,this,  Direction.right, player));
         }
 
         if(jsonName.equals(s1)) {
-            inky_ = new Inky(10, 11, 62, 166, 238, this,  Direction.left, player_,deltaTime);
-            Thread threadInky = new Thread(inky_);
+            entities_.add(new Inky(10, 11, 62, 166, 238, this,  Direction.left, player));
         }
         else if(jsonName.equals(s2)){
-            inky_ = new Inky(15,9,62,166,238,this,  Direction.right, player_, deltaTime);
-            Thread threadInky = new Thread(inky_);
+            entities_.add(new Inky(15,9,62,166,238,this,  Direction.right, player));
         }
 
-
-        player_.addPlayerMoveListener(this::onPacmanMoved);
 
         setPreferredSize(new Dimension(
                 BLOCK_SIZE * (fieldMatrix_.getWidth() - 2),
@@ -103,12 +97,9 @@ public class Board extends JPanel {
 
         setFocusable(true);
 
-//        threadBlinky.start();
-//        threadPinky.start();
-//        threadClyde.start();
+        threadPool_ = Executors.newFixedThreadPool(MAX_THREAD_NO);
 
-
-        timer_ = new Timer(1000 / 60, (ActionEvent avt) -> this.update(deltaTime));
+        timer_ = new Timer(1000 / 60, (ActionEvent avt) -> this.update(1 / 60.0));
         timer_.start();
     }
 
@@ -136,30 +127,8 @@ public class Board extends JPanel {
             }
         }
 
-        player_.draw(g2d);
-
-        try {
-            blinky_.draw(g2d);
-        }catch (Exception e){
-            System.out.println("Blinky not created");
-        }
-
-        try {
-            pinky_.draw(g2d);
-        }catch (Exception e){
-            System.out.println("Pinky not created");
-        }
-
-        try {
-            clyde_.draw(g2d);
-        }catch (Exception e){
-            System.out.println("Clyde not created");
-        }
-
-        try {
-            inky_.draw(g2d);
-        }catch (Exception e){
-            System.out.println("Inky not created");
+        for (AbstractEntity entity : entities_) {
+            entity.draw(g2d);
         }
 
         g2d.setTransform(oldTransform);
@@ -175,7 +144,6 @@ public class Board extends JPanel {
         if (hasGameEnded()) {
             String s = "You have " + (gameWon_ ? "won!" : "lost.");
             g2d.drawString(s, 20, 30);
-
         }
 
     }
@@ -234,25 +202,27 @@ public class Board extends JPanel {
     }
 
     /**
-     * Callback for when pacman have moved in update - unclear if this should stay.
-     */
-    public void onPacmanMoved() {
-
-    }
-
-    /**
      * Update step of update-draw-wait loop
      *
      * @param dt delta time
      */
     public void update(double dt) {
-
         if (!hasGameEnded()) {
-            player_.update();
-            blinky_.algorithmBlinky();
-            pinky_.algorithmPinky();
-            clyde_.algorithmClyde();
-          inky_.algorithmInky();
+            ArrayList<Future> futures = new ArrayList<>();
+
+            for (AbstractEntity entity : entities_) {
+                Future future = threadPool_.submit(() -> entity.update(dt));
+                futures.add(future);
+            }
+
+            for (Future future : futures) {
+                try {
+                    future.get();
+                } catch (Exception e) {
+                    throw new RuntimeException("Something");
+                }
+            }
+
             repaint();
         }
     }
@@ -270,36 +240,18 @@ public class Board extends JPanel {
      * @return true if game ended, false otherwise
      */
     public boolean hasGameEnded() {
-
-        if (Math.abs(player_.getLocalCenter().getX() - blinky_.getLocalCenter().getX()) < 0.1 &&
-                Math.abs(player_.getLocalCenter().getY() - blinky_.getLocalCenter().getY()) < 0.1) {
-            timer_.stop();
-            return gameWon_ = false;
-        }
-        else if (Math.abs(player_.getLocalCenter().getX() - inky_.getLocalCenter().getX()) < 0.1 &&
-                Math.abs(player_.getLocalCenter().getY() - inky_.getLocalCenter().getY()) < 0.1) {
-            timer_.stop();
-            return gameWon_ = false;
-        }
-        else if (Math.abs(player_.getLocalCenter().getX() - pinky_.getLocalCenter().getX()) < 0.1 &&
-                Math.abs(player_.getLocalCenter().getY() - pinky_.getLocalCenter().getY()) < 0.1) {
-            timer_.stop();
-            return gameWon_ = false;
-        }
-        else if (Math.abs(player_.getLocalCenter().getX() - clyde_.getLocalCenter().getX()) < 0.1 &&
-                Math.abs(player_.getLocalCenter().getY() - clyde_.getLocalCenter().getY()) < 0.1) {
-            timer_.stop();
-            return gameWon_ = false;
-        }
-        else{
-            return gameWon_ != null;
-        }
+        return gameWon_ != null;
     }
 
     /**
      * Force stops timer and game.
      */
-    void forceStop() {
+    public void forceStop() {
+        if (highscoreManager_.get(levelName_) < score_) {
+            highscoreManager_.put(levelName_, score_);
+            highscoreManager_.saveToFile();
+        }
+
         timer_.stop();
         gameWon_ = false;
     }

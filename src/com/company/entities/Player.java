@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 import static java.awt.event.KeyEvent.*;
 
-public class Player implements Runnable{
+public class Player extends AbstractEntity {
     private static final double PLAYER_SPEED = 8.5;
     private static final Color COLOR = new Color(255, 255, 0);
     private static final Rectangle2D.Double RECT = new Rectangle2D.Double(0, 0, 0.6, 0.6);
@@ -33,7 +33,6 @@ public class Player implements Runnable{
     private final List<Runnable> onPlayerMoveListeners_;
     private Direction direction_;
     private Direction nextDirection_;
-    private double dt;
 
     /**
      * Default constructor for Player class.
@@ -42,14 +41,13 @@ public class Player implements Runnable{
      * @param y starting y-coordinate for player
      * @param board board this player belongs to
      */
-    public Player(int x, int y, @NotNull Board board, double dT) {
+    public Player(int x, int y, @NotNull Board board) {
         localCenter_ = new Vector2d(x + 0.5, y + 0.5);
         board_ = board;
         onPlayerMoveListeners_ = new ArrayList<>();
 
         direction_ = Direction.up;
         nextDirection_ = null;
-        dt = dT;
     }
 
 
@@ -174,7 +172,8 @@ public class Player implements Runnable{
     /**
      * Main function that processes player update.
      */
-    public void update() {
+    @Override
+    public void update(double dt) {
         KEY_TO_DIRECTION.forEach((Integer key_code, Direction direction) -> {
             if (board_.getKeyboardManager().isDown(key_code)) {
                 nextDirection_ = direction;
@@ -219,8 +218,5 @@ public class Player implements Runnable{
         notifyListeners();
     }
 
-    @Override
-    public void run() {
-        update();
-    }
+
 }
