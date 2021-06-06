@@ -1,5 +1,7 @@
 package com.company;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,15 +9,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Object for checking state of a key in a frame.
  */
 public class KeyboardManager implements KeyListener {
-    private final Map<Integer, Boolean> keyToPressed_;
+    private final ConcurrentMap<Integer, Boolean> keyToPressed_;
 
     public KeyboardManager() {
-        keyToPressed_ = new HashMap<Integer, Boolean>();
+        keyToPressed_ = new ConcurrentHashMap<Integer, Boolean>();
 
         keyToPressed_.put(KeyEvent.VK_UP, false);
         keyToPressed_.put(KeyEvent.VK_DOWN, false);

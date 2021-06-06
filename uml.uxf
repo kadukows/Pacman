@@ -236,9 +236,9 @@ _- KEY_TO_DIRECTION: Map&lt;Integer, Direction&gt;_
     <id>UMLClass</id>
     <coordinates>
       <x>1160</x>
-      <y>580</y>
+      <y>470</y>
       <w>480</w>
-      <h>330</h>
+      <h>370</h>
     </coordinates>
     <panel_attributes>Board
 --
@@ -248,6 +248,10 @@ _- MAX_THREAD_NO: int_
 - fieldMatrix_: Matrix&lt;AbstractField&gt;
 - entities_: ArrayList&lt;AbstractEntity&gt;
 - keyboardManager_: KeyboardManager
+- highscoreManager_: HighscoreManager
+- levelName_: String
+- timer_: Timer
+- threadPool_: ExecutorService
 - gameWon_: Boolean
 - score_: int
 --
@@ -265,8 +269,8 @@ _- MAX_THREAD_NO: int_
     <id>UMLClass</id>
     <coordinates>
       <x>1250</x>
-      <y>500</y>
-      <w>100</w>
+      <y>390</y>
+      <w>90</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>JPanel</panel_attributes>
@@ -276,7 +280,7 @@ _- MAX_THREAD_NO: int_
     <id>Relation</id>
     <coordinates>
       <x>1290</x>
-      <y>520</y>
+      <y>410</y>
       <w>30</w>
       <h>80</h>
     </coordinates>
@@ -287,26 +291,26 @@ _- MAX_THREAD_NO: int_
     <id>Relation</id>
     <coordinates>
       <x>860</x>
-      <y>900</y>
+      <y>830</y>
       <w>390</w>
-      <h>170</h>
+      <h>240</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
 m2=1..n</panel_attributes>
-    <additional_attributes>370.0;10.0;10.0;150.0</additional_attributes>
+    <additional_attributes>370.0;10.0;10.0;220.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>2420</x>
       <y>120</y>
-      <w>260</w>
+      <w>350</w>
       <h>120</h>
     </coordinates>
     <panel_attributes>KeyboardManager
 --
-- keyToPressed_: Map&lt;Integer, Boolean&gt;
+- keyToPressed_: ConcurrentMap&lt;Integer, Boolean&gt;
 --
 + keyTyped(KeyEvent): void
 + keyPressed(KeyEvent): void
@@ -419,10 +423,10 @@ m2=1..n</panel_attributes>
       <x>1480</x>
       <y>250</y>
       <w>510</w>
-      <h>350</h>
+      <h>240</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>490.0;10.0;10.0;330.0</additional_attributes>
+    <additional_attributes>490.0;10.0;10.0;220.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -710,13 +714,13 @@ _- RECT: Rectangle2D.Double_
     <id>Relation</id>
     <coordinates>
       <x>1520</x>
-      <y>900</y>
-      <w>210</w>
-      <h>190</h>
+      <y>830</y>
+      <w>220</w>
+      <h>260</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
 m2=1..n</panel_attributes>
-    <additional_attributes>10.0;10.0;190.0;170.0</additional_attributes>
+    <additional_attributes>10.0;10.0;190.0;240.0</additional_attributes>
   </element>
 </diagram>
